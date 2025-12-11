@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - DevFlix</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/portfolio.css">
+</head>
+<body class="overflow-x-hidden">
+    <!-- NAV BAR -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 navbar-transition px-4 md:px-12 py-4 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
+        <div class="flex items-center gap-8">
+            <div class="text-red-600 text-3xl md:text-4xl font-extrabold tracking-tight cursor-pointer">
+                DATA ANALYST
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-300">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+                <a href="#skills" class="hover:text-white transition-colors">My List</a>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-6 text-gray-200 flex-1 ml-8">
+            <div class="relative flex-1 max-w-sm hidden md:block">
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search projects, skills, experience..." 
+                    class="w-full bg-gray-800/50 text-white placeholder-gray-500 rounded px-4 py-2 text-sm focus:outline-none focus:bg-gray-800 focus:ring-1 focus:ring-red-600 transition-all"
+                    oninput="handleSearch(this.value)">
+                <i data-lucide="search" class="w-4 h-4 absolute right-3 top-3 text-gray-500 pointer-events-none"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-gray-200">
+            <i data-lucide="bell" class="w-6 h-6 cursor-pointer hover:text-white"></i>
+            <div class="flex items-center gap-1 cursor-pointer group">
+                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center font-bold text-xs">
+                    AS
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SEARCH RESULTS MODAL -->
+    <div id="search-results" class="fixed inset-0 bg-black/80 z-[8000] hidden flex items-start justify-center pt-20 overflow-y-auto">
+        <div class="w-full max-w-6xl px-4 pb-10">
+            <button onclick="clearSearch()" class="mb-6 text-gray-400 hover:text-white flex items-center gap-2">
+                <i data-lucide="x" class="w-5 h-5"></i> Close Search
+            </button>
+            <div id="search-results-content" class="space-y-8">
+                <!-- Search results will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION (Billboard) -->
+    <header id="home" class="relative h-[85vh] w-full">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800">
+            <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-black/60"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/40 to-transparent"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="absolute bottom-[18%] left-4 md:left-12 max-w-xl md:max-w-2xl space-y-5 md:space-y-6">
+            <div class="flex items-center gap-2 text-gray-300 font-bold tracking-widest text-xs md:text-sm uppercase">
+                <span class="text-red-600 text-xl">A</span> Profile
+            </div>
+            
+            <h1 class="text-4xl md:text-7xl font-black leading-none drop-shadow-2xl">
+                Aishvarya Salvi
+            </h1>
+            
+            <div class="flex flex-wrap items-center gap-3 text-green-400 font-bold text-xs md:text-base">
+                <span>98% Match</span>
+                <span class="text-gray-400">2025</span>
+                <span class="border border-gray-500 px-1 text-gray-400 text-[10px] md:text-xs">Grad Student</span>
+                <span class="text-gray-300">3 Years Experience</span>
+            </div>
+
+            <p class="text-gray-300 text-sm md:text-lg drop-shadow-md max-w-xl">
+                A data-driven professional who builds scalable ML pipelines and real-time analytics engines. 
+                Watch as raw data is transformed into actionable insights using Python, Spark, and Docker. 
+                Based on a true story.
+            </p>
+
+            <div class="flex flex-wrap gap-3 md:gap-4 pt-3">
+                <a href="assets/resume.pdf" target="_blank" class="flex items-center gap-2 md:gap-3 bg-white text-black px-5 md:px-8 py-2.5 md:py-3 rounded font-bold text-sm md:text-lg hover:bg-white/90 transition-colors">
+                    <i data-lucide="play" class="fill-black w-5 h-5 md:w-6 md:h-6"></i> Resume
+                </a>
+                <button onclick="openAboutModal()" class="flex items-center gap-2 md:gap-3 bg-gray-500/70 text-white px-5 md:px-8 py-2.5 md:py-3 rounded font-bold text-sm md:text-lg hover:bg-gray-500/50 transition-colors backdrop-blur-sm">
+                    <i data-lucide="info" class="w-5 h-5 md:w-6 md:h-6"></i> More Info
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ROWS CONTAINER -->
+    <div class="relative z-10 -mt-24 pb-20 space-y-10 md:space-y-12 pl-4 md:pl-12" id="rows-container" style="overflow-x: hidden; overflow-y: visible;">
+        <!-- Rows will be injected here by JS -->
+    </div>
+
+    <!-- FOOTER -->
+    <div class="pt-10 md:pt-20 pr-4 md:pr-12 text-center text-gray-500 text-xs md:text-sm pb-10">
+        <div class="flex justify-center gap-6 mb-6 md:mb-8">
+            <i data-lucide="github" class="cursor-pointer hover:text-white w-5 h-5 md:w-6 md:h-6" onclick="window.open('https://github.com/aishwaryasalvi777')"></i>
+            <i data-lucide="linkedin" class="cursor-pointer hover:text-white w-5 h-5 md:w-6 md:h-6" onclick="window.open('https://linkedin.com/in/aishvaryasalvi')"></i>
+            <i data-lucide="mail" class="cursor-pointer hover:text-white w-5 h-5 md:w-6 md:h-6" onclick="window.location.href='mailto:aishvary@buffalo.edu'"></i>
+        </div>
+        <p>Member since 2021</p>
+        <p class="mt-2">© Aishvarya Salvi All Rights Reserved</p>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal-backdrop" class="fixed inset-0 z-[60] bg-black/80 hidden flex justify-center items-center p-4 overflow-y-auto backdrop-blur-sm">
+        <div id="modal-content" class="bg-[#181818] w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden relative animate-fade-in mx-2 md:mx-0">
+            <!-- Close Button -->
+            <button class="absolute top-4 right-4 bg-[#181818] rounded-full p-2 z-10 hover:bg-gray-800" onclick="closeModal()">
+                <i data-lucide="x" class="text-white w-6 h-6"></i>
+            </button>
+            
+            <!-- Dynamic Content Area -->
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="js/portfolio.js"></script>
+    
+    <script>
+        // Reinitialize Lucide icons after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+                preview: "End-to-end ML pipeline. Production-grade MLOps.",
+                gradient: "bg-gradient-to-br from-cyan-40 via-blue-500 to-blue-700",
+                image: "https://unsplash.com/photos/PRIlO4BApPI/download?force=true&w=1600",
+                tags: ["Azure ML", "Snowflake", "CatBoost"],
+                points: [
+                    "Built an end-to-end ML pipeline in Azure Machine Learning for global sales forecasting across multiple regions and product silhouettes.",
+                    "Converted a large exploratory notebook into a fully modular, production-grade MLOps process using Azure ML Components and Designer pipelines.",
+                    "Integrated Snowflake with Azure ML for automated and secure data ingestion.",
+                    "Developed feature engineering (lags, rolling windows, time-based patterns) and trained CatBoost forecasting models.",
+                    "Implemented custom environments, versioned components, and reusable pipeline assets in Azure ML.",
+                    "Created a Streamlit web application to visualize forecasts with interactive charts and model performance insights.",
+                    "Troubleshot and resolved cloud issues involving Key Vault authentication, environment conflicts, and compute configuration.",
+                    "Delivered an automated, scalable ML workflow supporting accurate demand forecasting at New Era Cap."
+                ]
+            },
+            {
+                id: 14,
+                title: "Student Assistant @ University at Buffalo",
+                year: "Jan 2025 - May 2025",
+                desc: "Supported predictive analytics and data analysis projects as a part-time student assistant.",
+                match: "Part-time",
+                preview: "Predictive analytics. Data analysis projects.",
+                gradient: "",
+                image: "assets/images/ub_logo.png",
+                tags: ["Predictive Analytics", "Data Analysis"],
+                points: [
+                    "Assisted with predictive analytics and data analysis tasks for faculty research and internal projects.",
+                    "Prepared datasets, performed exploratory analysis, and helped build reproducible analysis notebooks."
+                ]
+            },
+            {
+                id: 4,
+                title: "Software Engineer @ Mediaocean",
+                year: "Mar 2023 - Jul 2024",
+                desc: "Automated large-scale data validation and analytics workflows; focused on CI/CD and test automation.",
+                match: "Featured",
+                preview: "95% API coverage. Advanced CI/CD pipelines.",
+                gradient: "",
+                image: "assets/images/mo.png",
+                tags: ["Regression", "Jenkins", "Karate"],
+                points: [
+                    "Automated large-scale data validation and analytics workflows by developing Karate API & Selenium frameworks, boosting API regression coverage from 40% to 95% and reducing production defects by 30%.",
+                    "Orchestrated end-to-end data-driven QA pipelines using CI/CD tools (Jenkins, GitHub Actions) with Docker, and created interactive Power BI dashboards for KPI and test coverage tracking.",
+                    "Streamlined environment setup from 2 hours to just 10 minutes, improved QA pipeline stability by 50%, and cut Mean Time to Recovery (MTTR) by 40%.",
+                    "Led both manual and automated testing efforts, collaborating cross-functionally and mentoring junior members to ensure high product quality."
+                ]
+            },
+            {
+                id: 5,
+                title: "Associate Software Engineer @ Mediaocean",
+                year: "Aug 2021 - Mar 2023",
+                desc: "Developed validation scripts and analytics reports to ensure data integrity across releases.",
+                match: "Classic",
+                preview: "95% validation coverage. 97% build success rate.",
+                gradient: "",
+                image: "assets/images/mo.png",
+                tags: ["SQL", "Analytics", "Agile"],
+                points: [
+                    "Developed SQL-based validation scripts and analytics reports to ensure data integrity across software releases, increasing coverage from 60% to 95% and reducing escaped defects by 40%.",
+                    "Collaborated with product and engineering teams in Agile sprints to analyze requirements, monitor 200+ defect trends, and apply frontend/API inspection tools—cutting bug resolution time by 30% and sustaining a 97% build success rate.",
+                    "Designed and executed both manual and automated test cases for key features, supporting rolling deployments and continuous integration initiatives."
+                ]
+            }
+        ];
+
+        const skillsData = [
+            // Programming Languages
+            { id: 6, title: "Python", icon: "🐍", tags: ["Language"], gradient: "bg-blue-900", match: "Top 10", level: 95, years: 4, frequency: 95 },
+            { id: 7, title: "SQL", icon: "💾", tags: ["Database"], gradient: "bg-orange-900", match: "Essential", level: 90, years: 4, frequency: 90 },
+            { id: 50, title: "Java", icon: "☕", tags: ["Language"], gradient: "bg-red-900", match: "Advanced", level: 75, years: 3, frequency: 60 },
+            { id: 51, title: "R", icon: "📊", tags: ["Language"], gradient: "bg-indigo-800", match: "Advanced", level: 80, years: 2, frequency: 70 },
+            { id: 52, title: "C/C++", icon: "⚙️", tags: ["Language"], gradient: "bg-gray-700", match: "Intermediate", level: 65, years: 2, frequency: 40 },
+            
+            // Frameworks & Libraries
+            { id: 53, title: "Pandas", icon: "🐼", tags: ["Library"], gradient: "bg-green-900", match: "Expert", level: 95, years: 3, frequency: 95 },
+            { id: 54, title: "NumPy", icon: "🔢", tags: ["Library"], gradient: "bg-blue-800", match: "Expert", level: 92, years: 3, frequency: 90 },
+            { id: 55, title: "Scikit-learn", icon: "🤖", tags: ["ML"], gradient: "bg-orange-800", match: "Expert", level: 90, years: 3, frequency: 85 },
+            { id: 56, title: "TensorFlow", icon: "🧠", tags: ["ML"], gradient: "bg-amber-900", match: "Advanced", level: 80, years: 2, frequency: 70 },
+            { id: 57, title: "Streamlit", icon: "💻", tags: ["Frontend"], gradient: "bg-red-800", match: "Advanced", level: 85, years: 1, frequency: 75 },
+            { id: 58, title: "FastAPI", icon: "⚡", tags: ["Backend"], gradient: "bg-green-800", match: "Advanced", level: 85, years: 2, frequency: 80 },
+            { id: 8, title: "Apache Spark", icon: "⚡", tags: ["Big Data"], gradient: "bg-yellow-700", match: "Trending", level: 85, years: 2, frequency: 75 },
+            
+            // Databases
+            { id: 59, title: "PostgreSQL", icon: "🐘", tags: ["Database"], gradient: "bg-blue-700", match: "Expert", level: 90, years: 3, frequency: 85 },
+            { id: 60, title: "Oracle DB", icon: "🗄️", tags: ["Database"], gradient: "bg-red-700", match: "Advanced", level: 75, years: 2, frequency: 60 },
+            { id: 61, title: "SQLite", icon: "💾", tags: ["Database"], gradient: "bg-gray-800", match: "Advanced", level: 80, years: 2, frequency: 65 },
+            { id: 62, title: "Snowflake", icon: "❄️", tags: ["Data Warehouse"], gradient: "bg-cyan-800", match: "Expert", level: 88, years: 1, frequency: 80 },
+            
+            // DevOps & Tools
+            { id: 63, title: "Docker", icon: "🐳", tags: ["DevOps"], gradient: "bg-cyan-900", match: "Expert", level: 90, years: 3, frequency: 85 },
+            { id: 64, title: "Kubernetes", icon: "☸️", tags: ["DevOps"], gradient: "bg-blue-600", match: "Advanced", level: 78, years: 1, frequency: 60 },
+            { id: 65, title: "Jenkins", icon: "🔧", tags: ["CI/CD"], gradient: "bg-red-800", match: "Advanced", level: 82, years: 2, frequency: 80 },
+            { id: 66, title: "GitHub Actions", icon: "🚀", tags: ["CI/CD"], gradient: "bg-gray-900", match: "Advanced", level: 85, years: 2, frequency: 75 },
+            { id: 67, title: "Git/GitHub", icon: "🐙", tags: ["Version Control"], gradient: "bg-gray-700", match: "Expert", level: 95, years: 4, frequency: 100 },
+            
+            // Cloud Platforms
+            { id: 11, title: "AWS/GCP/Azure", icon: "☁️", tags: ["Cloud"], gradient: "bg-slate-700", match: "Popular", level: 80, years: 2, frequency: 75 },
+            
+            // Testing & QA
+            { id: 68, title: "Selenium", icon: "🧪", tags: ["Testing"], gradient: "bg-green-700", match: "Advanced", level: 82, years: 2, frequency: 75 },
+            { id: 69, title: "Karate API", icon: "🥋", tags: ["Testing"], gradient: "bg-orange-700", match: "Intermediate", level: 70, years: 1, frequency: 65 },
+            
+            // Analytics & Visualization
+            { id: 70, title: "Power BI", icon: "📈", tags: ["BI"], gradient: "bg-yellow-800", match: "Advanced", level: 85, years: 2, frequency: 80 },
+            { id: 71, title: "Tableau", icon: "📊", tags: ["BI"], gradient: "bg-orange-900", match: "Advanced", level: 80, years: 1, frequency: 70 },
+            { id: 72, title: "Matplotlib/Seaborn", icon: "📉", tags: ["Visualization"], gradient: "bg-purple-900", match: "Expert", level: 92, years: 3, frequency: 90 },
+            
+            // IDEs & Editors
+            { id: 73, title: "VS Code", icon: "💻", tags: ["IDE"], gradient: "bg-blue-800", match: "Expert" },
+            { id: 74, title: "PyCharm", icon: "🎯", tags: ["IDE"], gradient: "bg-green-900", match: "Advanced" },
+            
+            // Others
+            { id: 9, title: "Kafka", icon: "📨", tags: ["Streaming"], gradient: "bg-purple-900", match: "Hot" },
+            { id: 75, title: "A/B Testing", icon: "🧪", tags: ["Analytics"], gradient: "bg-indigo-900", match: "Advanced" },
+            { id: 12, title: "React", icon: "⚛️", tags: ["Frontend"], gradient: "bg-indigo-900", match: "Intermediate" },
+        ];
+
+        // --- RECOMMENDATIONS DATA ---
+        const recommendationsData = [
+            {
+                id: 200,
+                reviewer: "Harshal Patil",
+                role: "Data Engineer | Data Analyst",
+                company: "Troy & Banks",
+                year: "2025",
+                image: "assets/images/recomm_Harshal.png",
+                excerpt: "Exceptional work ethic, keen desire to learn, and genuine willingness to support peers with deep understanding of data science.",
+                fullReview: "I have had the pleasure of working closely with Aishvarya Salvi as a classmate, project partner, and teammate in university competitions and academic projects at the University at Buffalo. Aishvarya stands out for her exceptional work ethic, keen desire to learn, and genuine willingness to support her peers. Throughout our collaborations, Aishvarya has consistently demonstrated a deep understanding of data science concepts and remarkable proficiency in SQL, Python, Tableau, and Power BI tools. Whether we were tackling a challenging group project or competing as a team, she always brought thoughtful insights, strong analytical skills, and a positive, can-do attitude. What truly sets Aishvarya apart is her dedication and reliability. She takes initiative, is always eager to contribute, and goes above and beyond to help her teammates succeed. Her commitment to quality and her ability to solve complex problems efficiently have made a significant impact on our collective results. Aishvarya is a supportive and approachable teammate who creates a collaborative and motivating environment.",
+                tags: ["Work Ethic", "Data Science", "Collaboration"],
+                match: "Featured",
+                gradientStart: "#722F37",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/harshal-patil"
+            },
+            {
+                id: 201,
+                reviewer: "Anirudh Mhaske",
+                role: "Cloud Engineer | AI/ML Specialist",
+                company: "University at Buffalo",
+                year: "2025",
+                image: "assets/images/recomm_Anirudh.png",
+                excerpt: "Explained complex ML concepts in such a clear and approachable way that made the entire pipeline easy to grasp.",
+                fullReview: "I had the chance to learn from Aishvarya when she walked me through her Heart Attack Risk Prediction project. She explained complex ML concepts in such a clear and approachable way that it made the entire pipeline, from data prep to deployment, easy to grasp. Her strong technical skills and willingness to share knowledge truly inspired me, and I'm confident she'll bring the same clarity and dedication to any project she undertakes. She has a remarkable ability to mentor and lift up those around her.",
+                tags: ["Knowledge Sharing", "ML Expertise", "Mentorship"],
+                match: "Top Review",
+                gradientStart: "#2d1b3d",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/anirudh-mhaske"
+            },
+            {
+                id: 202,
+                reviewer: "Sneha Parsekar",
+                role: "Sr. QA Manager",
+                company: "Mediaocean",
+                year: "2024",
+                image: "assets/images/recomm_Sneha.png",
+                excerpt: "Highly organized, efficient, and brought positive energy with a can-do attitude to every task.",
+                fullReview: "As a manager, I found Aishvarya to be highly organized and efficient. As a team member, Aishvarya always brought a positive energy and a can-do attitude. She was quick to lend a helping hand and support her colleagues whenever needed. Her reliability and proactive approach made her a valued member of our team. She consistently demonstrated professionalism and dedication in everything she undertook.",
+                tags: ["Organization", "Team Leadership", "Reliability"],
+                match: "Featured",
+                gradientStart: "#1a2332",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/sneha-parsekar"
+            },
+            {
+                id: 203,
+                reviewer: "Vishal Sonar",
+                role: "Senior Software Developer",
+                company: "Mediaocean",
+                year: "2024",
+                image: "assets/images/recomm_Vishal.png",
+                excerpt: "Strong technical skills, problem-solving mindset, unique blend of technical expertise with leadership qualities and mentoring abilities.",
+                fullReview: "I had the pleasure of working with Aishvarya at Mediaocean, where we were part of the same team. From day one, she stood out for her strong technical skills, problem-solving mindset, and ability to quickly adapt to challenges. Aishvarya not only delivered high-quality work consistently but also brought great energy and collaboration to the team. She has a unique blend of technical expertise and leadership qualities of always willing to guide others, share knowledge, and take initiative to improve processes. She successfully led projects, supported the team through challenges, and even trained new interns, ensuring they felt comfortable and confident in their roles. Her teamwork, leadership, and mentoring abilities made a real difference in our team's success. What stood out to me was her eye for detail and her ability to think beyond just finding bugs. She understood the product deeply and always considered the end-user experience, making her feedback incredibly valuable for the team. Reliable, approachable, and proactive.",
+                tags: ["Technical Leadership", "Mentorship", "Problem Solving"],
+                match: "Top Review",
+                gradientStart: "#3d2a1f",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/vishal-sonar"
+            },
+            {
+                id: 204,
+                reviewer: "Prasanna Wadekar",
+                role: "Lead Engineer | Microservices Developer",
+                company: "Mediaocean",
+                year: "2024",
+                image: "assets/images/recomm_Prasanna.png",
+                excerpt: "Detail-oriented testing, automated most of product improving team efficiency, exceptional client communication, strong leadership.",
+                fullReview: "I had the opportunity to work closely with Aishvarya at Mediaocean, where she played a key role in ensuring the quality and reliability of our products. As a developer, I truly appreciated how detail-oriented and thorough she was in her testing, which made my job so much easier. She didn't just stop at identifying issues—she always provided clear insights, reproducible cases, and even suggestions for improvement. Over time Aishvarya developed a strong interest in automation and went on to automate most of the product, covering both front-end and back-end processes. This not only saved the team a significant amount of time but also improved the consistency and efficiency of our testing cycles. She also represented our team exceptionally well, presenting the product to clients during releases and showcasing both her technical expertise and communication skills. Aishvarya was a great collaborator, bridging the gap between development and testing seamlessly. She understood the product deeply, kept the end-user experience in mind, and worked closely with us to make sure every release was smooth and successful. She took initiative in mentoring new interns and guiding the team whenever needed, showing strong leadership alongside her technical strengths. Beyond her professional contributions, Aishvarya was approachable, supportive, and a positive influence in the workplace.",
+                tags: ["QA Excellence", "Automation", "Team Leadership"],
+                match: "Featured",
+                gradientStart: "#1a3d3d",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/prasanna-wadekar"
+            },
+            {
+                id: 205,
+                reviewer: "Arjun Gurung",
+                role: "Software Developer",
+                company: "Mediaocean",
+                year: "2024",
+                image: "assets/images/recomm_Arjun.png",
+                excerpt: "Outstanding work ethic and exceptional attention to detail. Identifies complex edge cases that traditional testing might miss.",
+                fullReview: "I highly recommend Aishvarya for her outstanding work ethic and exceptional attention to detail. Collaborating with her during development, her comprehensive and insightful QA testing has been invaluable to the team. Aishvarya consistently identifies complex edge cases and performance bottlenecks that traditional testing might miss, directly leading to more robust and reliable backend systems. Her meticulous approach to testing and deep understanding of system architecture made her an invaluable partner in development. Any team would be lucky to have her.",
+                tags: ["Testing Excellence", "Attention to Detail", "Performance"],
+                match: "Top Review",
+                gradientStart: "#3d1f2d",
+                gradientEnd: "#141414",
+                rating: 5,
+                linkedinUrl: "https://linkedin.com/in/arjun-gurung"
+            }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderRow(title, data, isWide = false, isPortrait = false) {
+            const container = document.getElementById('rows-container');
+            
+            const cardWidthClass = isWide 
+                ? 'w-[300px] h-[170px]' 
+                : isPortrait 
+                    ? 'w-[150px] h-[220px]' 
+                    : 'w-[250px] h-[140px]';
+
+            let cardsHtml = data.map(item => `
+                 <div
+                     onclick="openModalById(${item.id})"
+                     onmouseenter="showHoverCard(${item.id}, this)"
+                     onmouseleave="scheduleHideHoverCard()"
+                     class="relative flex-shrink-0 rounded-md bg-[#181818] cursor-pointer tile-hover shadow-lg ${cardWidthClass}"
+                     style="overflow: visible;">
+                    
+                    <!-- NEW Badge -->
+                    ${item.badge ? `<div class="absolute top-2 left-2 z-30 bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded">NEW</div>` : ''}
+
+                    <!-- Background -->
+                    <div class="w-full h-full relative overflow-hidden">
+                        ${item.image ? `<div class="absolute inset-0 bg-[url('${item.image}')] bg-cover bg-center brightness-125 transition-all duration-300" style="filter: ${!isPortrait ? 'var(--blur-filter, blur(0px))' : 'blur(0px)'}"></div>` : ''}
+                        <div class="absolute inset-0 ${(item.gradient || 'bg-gray-800')} ${item.image && item.gradient ? 'opacity-90' : item.image ? 'opacity-0' : ''}"></div>
+                        <div class="relative w-full h-full flex items-start justify-start p-4 text-left font-bold text-gray-200 bg-gradient-to-b from-black/40 to-transparent transition-all duration-300" style="filter: ${!isPortrait ? 'var(--blur-filter, blur(0px))' : 'blur(0px)'}">
+                            ${
+                                isPortrait 
+                                ? `<div class="flex flex-col items-center gap-2">
+                                        <span class="text-3xl">${item.icon}</span>
+                                        <span class="text-sm">${item.title}</span>
+                                   </div>`
+                                : item.title
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Hover Overlay -->
+                    <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-between p-3 rounded-md" ${!isPortrait ? `onmouseenter="this.parentElement.style.setProperty('--blur-filter', 'blur(4px)')" onmouseleave="this.parentElement.style.setProperty('--blur-filter', 'blur(0px)')"` : ''}>
+                        <div>
+                            ${!isPortrait && item.year ? `<div class="text-[10px] text-gray-400 mb-1">${item.year}</div>` : ''}
+                            ${!isPortrait && item.category ? `<div class="text-[11px] text-purple-300 font-semibold mb-1">${item.category}</div>` : ''}
+                            ${!isPortrait && item.preview ? `<div class="text-[10px] text-gray-200 mb-2 leading-tight">${item.preview}</div>` : ''}
+                        </div>
+                        <div>
+                            ${!isPortrait ? `
+                            <div class="flex gap-2 mb-2 items-center">
+                                <div class="bg-white rounded-full p-1">
+                                    <i data-lucide="play" class="fill-black w-2.5 h-2.5"></i>
+                                </div>
+                                <div class="border border-gray-400 rounded-full p-1">
+                                    <i data-lucide="plus" class="w-2.5 h-2.5"></i>
+                                </div>
+                                <div class="border border-gray-400 rounded-full p-1 ml-auto">
+                                    <i data-lucide="chevron-right" class="w-2.5 h-2.5"></i>
+                                </div>
+                            </div>` : ''}
+                            <div class="flex items-center gap-2 text-[10px] text-green-400 font-bold">
+                                <span>${item.match}</span>
+                                <span class="border border-gray-500 px-1 text-gray-300">HD</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                ${item.tags.slice(0, 3).map(t => `<span class="text-[10px] text-gray-200">• ${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const sectionHtml = `
+                <div class="space-y-2 group animate-row" style="position: relative; z-index: 1; overflow: visible;">
+                    <h3 class="text-gray-200 text-lg md:text-xl font-bold group-hover:text-white transition-colors pl-2">
+                        ${title}
+                    </h3>
+                    <div class="flex gap-4 hide-scrollbar pb-6 md:pb-8 pt-3 md:pt-4 px-2 overflow-visible" style="overflow-x: auto; overflow-y: visible;">
+                        ${cardsHtml}
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += sectionHtml;
+        }
+
+        // Render Skills as Heatmap with Bars
+        function renderSkillsHeatmap(title, skills) {
+            const container = document.getElementById('rows-container');
+            
+            const heatmapHtml = skills.map(skill => `
+                <div class="skill-heatmap-tile" onclick="openModalById(${skill.id})">
+                    <div class="skill-heatmap-header">
+                        <div class="skill-heatmap-icon">${skill.icon}</div>
+                        <div class="skill-heatmap-title">${skill.title}</div>
+                    </div>
+                    <div class="skill-heatmap-bars">
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">Level</div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar-fill" style="--width: ${skill.level}%;"></div>
+                            </div>
+                            <div class="skill-bar-value">${skill.level}%</div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">Experience</div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar-fill" style="--width: ${Math.min(skill.years * 20, 100)}%;"></div>
+                            </div>
+                            <div class="skill-bar-value">${skill.years}y</div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">Usage</div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar-fill" style="--width: ${skill.frequency}%;"></div>
+                            </div>
+                            <div class="skill-bar-value">${skill.frequency}%</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const sectionHtml = `
+                <div class="space-y-2 group animate-row" style="position: relative; z-index: 1; overflow: visible;">
+                    <h3 class="text-gray-200 text-lg md:text-xl font-bold group-hover:text-white transition-colors pl-2">
+                        ${title}
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-6 md:pb-8 pt-3 md:pt-4 px-2">
+                        ${heatmapHtml}
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += sectionHtml;
+        }
+
+        // Render Recommendations
+        function renderRecommendations(title, recommendations) {
+            const container = document.getElementById('rows-container');
+            
+            const recommendationsHtml = recommendations.map(rec => `
+                <div class="recommendation-tile relative" style="--gradient-start: ${rec.gradientStart}; --gradient-end: ${rec.gradientEnd};">
+                    <!-- Main Content -->
+                    <div class="recommendation-content-main">
+                        <div class="recommendation-header">
+                            <div class="recommendation-avatar" style="background-image: url('${rec.image}');"></div>
+                            <div class="recommendation-reviewer-info">
+                                <div class="recommendation-reviewer-name">${rec.reviewer}</div>
+                                <div class="recommendation-reviewer-role">${rec.role}</div>
+                                ${rec.company ? `<div class="recommendation-company">${rec.company}</div>` : ''}
+                            </div>
+                        </div>
+                        <div class="recommendation-excerpt">"${rec.excerpt}"</div>
+                        <div class="recommendation-footer">
+                            <div class="recommendation-rating">
+                                ${Array(rec.rating).fill('⭐').join('')}
+                            </div>
+                            <div class="recommendation-match">${rec.match}</div>
+                        </div>
+                    </div>
+
+                    <!-- Hover Overlay with Play Button -->
+                    <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col justify-between p-4 rounded-lg">
+                        <div class="text-xs text-gray-400">${rec.year}</div>
+                        <div>
+                            <div class="flex gap-2 mb-3 items-center">
+                                <div class="bg-white rounded-full p-2 cursor-pointer hover:bg-gray-200 transition" onclick="openRecommendationModal(${rec.id})">
+                                    <i data-lucide="play" class="fill-black w-4 h-4"></i>
+                                </div>
+                                <div class="border-2 border-white rounded-full p-2 cursor-pointer hover:bg-white/20 transition">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                </div>
+                                <div class="border-2 border-white rounded-full p-2 ml-auto cursor-pointer hover:bg-white/20 transition" onclick="openRecommendationModal(${rec.id})">
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="text-xs text-green-400 font-bold mb-2">${rec.match} • ${rec.rating}⭐</div>
+                            <div class="flex flex-wrap gap-1">
+                                ${rec.tags.slice(0, 3).map(tag => `<span class="text-xs text-gray-300">• ${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expand Panel (appears below on hover) -->
+                    <div class="expand-info">
+                        <div class="p-4">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="bg-white rounded-full p-2 cursor-pointer hover:bg-gray-200 transition" onclick="event.stopPropagation(); openRecommendationModal(${rec.id})">
+                                    <i data-lucide="play" class="fill-black w-4 h-4"></i>
+                                </div>
+                                <div class="border-2 border-gray-400 rounded-full p-2 cursor-pointer hover:border-white transition">
+                                    <i data-lucide="plus" class="text-gray-400 hover:text-white w-4 h-4"></i>
+                                </div>
+                                <div class="border-2 border-gray-400 rounded-full p-2 cursor-pointer hover:border-white transition">
+                                    <i data-lucide="thumbs-up" class="text-gray-400 hover:text-white w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-300 mb-2 leading-relaxed">${rec.excerpt}</div>
+                            <div class="flex items-center gap-2 text-xs mb-2">
+                                <span class="text-green-400 font-bold">${rec.match}</span>
+                                <span class="text-gray-500">•</span>
+                                <span class="text-gray-400">${rec.year}</span>
+                                <span class="text-gray-500">•</span>
+                                <span class="text-yellow-400">${rec.rating}⭐</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                ${rec.tags.map(tag => `<span class="text-xs text-gray-400 bg-gray-800 px-2 py-1 rounded">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const sectionHtml = `
+                <div class="space-y-2 group animate-row" style="position: relative; z-index: 1;">
+                    <h3 class="text-gray-200 text-lg md:text-xl font-bold group-hover:text-white transition-colors pl-2">
+                        ${title}
+                    </h3>
+                    <div class="recommendations-scroll-wrapper">
+                        <div class="recommendations-scroll-container">
+                            <div class="recommendations-row">
+                                ${recommendationsHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += sectionHtml;
+        }
+
+        // --- INIT ---
+        renderRow("Trending Projects", projectsData, true);
+        renderRow("Blockbuster Experience", experienceData, true);
+        renderRow("Education", [
+            {
+                id: 101,
+                title: "University at Buffalo",
+                preview: "Master of Science in Data Science",
+                year: "Dec 2025",
+                gradient: "bg-blue-900",
+                image: "assets/images/ub_logo.png",
+                tags: ["Technical Skills", "Machine Learning", "Big Data"]
+            },
+            {
+                id: 102,
+                title: "Pune University",
+                preview: "Bachelor of Engineering in Computer Science",
+                year: "May 2021",
+                gradient: "bg-indigo-900",
+                image: "assets/images/pune_university_logo.png",
+                tags: ["Technical Skills", "Software Engineering"]
+            }
+        ], true);
+        
+        // Render Skills as Heatmap
+        renderSkillsHeatmap("Top Rated Technologies", skillsData);
+        
+        // Render Recommendations
+            renderRecommendations("What People Say About Aishvarya", recommendationsData);        // Re-initialize icons after dynamic insertion
+        lucide.createIcons();
+
+        // --- INTERACTION ---
+
+        // Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('bg-[#141414]');
+                nav.classList.remove('bg-gradient-to-b');
+            } else {
+                nav.classList.remove('bg-[#141414]');
+                nav.classList.add('bg-gradient-to-b');
+            }
+        });
+
+        // Modal Logic
+        function openModalById(id) {
+            const allItems = [...projectsData, ...experienceData, ...skillsData];
+            const item = allItems.find(i => i.id === id);
+            if(item) renderModal(item);
+        }
+
+        function openAboutModal() {
+            renderModal({
+                title: "About Aishvarya",
+                match: "100% Match",
+                desc: "Data-driven professional with 3+ years of experience in analytics, machine learning, and data engineering. Proficient in Python, SQL, Spark, Kafka, and GCP, with expertise in building scalable ML pipelines and recommendation engines. Adept at real-time data processing, model deployment, and interactive dashboard development. Strong foundation in MLOps, CI/CD, and containerization using Docker, Kubernetes, and Jenkins. Passionate about delivering actionable insights and production-ready solutions from complex datasets.",
+                tags: ["Data Science", "Engineering", "MLOps"],
+                links: [],
+                image: 'bg-blue-900',
+                points: ["3+ Years Experience", "MS in Data Science", "Full Stack ML"]
+            });
+        }
+
+        function renderModal(item) {
+            const modalBody = document.getElementById('modal-body');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            const linksHtml = item.links ? item.links.map((link, index) => {
+                const isPrimary = index === 0;
+                return `
+                    <a href="${link.url}" target="_blank" class="flex items-center gap-2 ${isPrimary ? 'bg-white text-black hover:bg-gray-200' : 'bg-gray-700 text-white hover:bg-gray-600'} px-6 py-2 rounded font-bold transition-colors">
+                        <i data-lucide="${isPrimary ? 'play' : 'file-text'}" class="${isPrimary ? 'fill-black' : ''} w-4 h-4"></i> ${link.label}
+                    </a>
+                `;
+            }).join('') : '';
+
+            const pointsHtml = item.points ? `
+                <div class="border-t border-gray-700 pt-6">
+                    <h4 class="text-xl font-bold mb-2">Highlights</h4>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        ${item.points.map(pt => `<li>${pt}</li>`).join('')}
+                    </ul>
+                </div>` : '';
+
+            modalBody.innerHTML = `
+                <!-- Banner -->
+                <div class="h-[260px] md:h-[320px] w-full bg-gradient-to-t from-[#181818] to-transparent relative">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-100 ${item.image || 'bg-blue-900'}"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    <div class="absolute top-0 left-0 p-6 md:p-10 w-full bg-gradient-to-b from-black/40 to-transparent">
+                        <h2 class="text-3xl md:text-5xl font-black mb-4 text-white">${item.title}</h2>
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-6 md:p-10 w-full bg-gradient-to-t from-[#181818] to-transparent">
+                        <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-4 text-xs md:text-sm">
+                            <span class="bg-yellow-600 text-black px-3 py-1 rounded font-bold">${item.match}</span>
+                            <span class="bg-blue-700 text-white px-3 py-1 rounded text-[10px] md:text-xs">${item.year || '2024'}</span>
+                            <span class="bg-purple-700 text-white px-3 py-1 rounded text-[10px] md:text-xs font-bold">HD</span>
+                            ${item.category ? `<span class="bg-green-700 text-white px-3 py-1 rounded text-[10px] md:text-xs">${item.category}</span>` : ''}
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            ${linksHtml}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="grid md:grid-cols-[2fr_1fr] gap-6 md:gap-8 p-6 md:p-10 pt-4 md:pt-6">
+                    <div>
+                        <p class="text-base md:text-lg text-white leading-relaxed mb-4 md:mb-6">${item.desc || ''}</p>
+                        ${pointsHtml}
+                    </div>
+                    <div class="text-xs md:text-sm space-y-3 md:space-y-4">
+                        <div>
+                            <span class="text-gray-500">Cast:</span> <span class="text-gray-300">Python, Spark, Kafka, React</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Genres:</span> <span class="text-gray-300">${item.tags ? item.tags.join(', ') : ''}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Maturity Rating:</span> <span class="border border-gray-500 px-1 text-[10px] md:text-xs ml-2 text-gray-400">Recruiters</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            backdrop.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            lucide.createIcons(); // Refresh icons in modal
+        }
+
+        function closeModal() {
+            document.getElementById('modal-backdrop').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Recommendation Modal Logic
+        function openRecommendationModal(id) {
+            const rec = recommendationsData.find(r => r.id === id);
+            if (!rec) return;
+            
+            const modal = document.getElementById('recommendation-modal') || createRecommendationModal();
+            const modalContent = modal.querySelector('.recommendation-modal-content');
+            
+            const starsHtml = Array(rec.rating).fill('⭐').join('');
+            
+            modalContent.innerHTML = `
+                <div class="recommendation-modal-header">
+                    <div class="recommendation-modal-avatar" style="background-image: url('${rec.image}');"></div>
+                    <div class="recommendation-modal-info">
+                        <div class="recommendation-modal-name">${rec.reviewer}</div>
+                        <div class="recommendation-modal-role">${rec.role}</div>
+                        ${rec.company ? `<div class="recommendation-modal-company">${rec.company}</div>` : ''}
+                        <div class="recommendation-modal-year">Collaborated: ${rec.year}</div>
+                        <div class="recommendation-modal-rating">${starsHtml}</div>
+                    </div>
+                </div>
+                <div class="recommendation-modal-text">"${rec.fullReview}"</div>
+                <div class="recommendation-modal-actions">
+                    <a href="${rec.linkedinUrl}" target="_blank" class="recommendation-linkedin-btn">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        View on LinkedIn
+                    </a>
+                    <button onclick="closeRecommendationModal()" class="recommendation-close-btn">Close</button>
+                </div>
+            `;
+            
+            modal.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function createRecommendationModal() {
+            const modal = document.createElement('div');
+            modal.id = 'recommendation-modal';
+            modal.className = 'recommendation-modal';
+            modal.innerHTML = '<div class="recommendation-modal-content"></div>';
+            modal.onclick = (e) => {
+                if (e.target === modal) closeRecommendationModal();
+            };
+            document.body.appendChild(modal);
+            return modal;
+        }
+
+        function closeRecommendationModal() {
+            const modal = document.getElementById('recommendation-modal');
+            if (modal) {
+                modal.classList.remove('visible');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // --- GLOBAL HOVER CARD LOGIC ---
+
+        const allItems = [...projectsData, ...experienceData, ...skillsData];
+        let hoverHideTimeout = null;
+
+        function buildHoverCardHtml(item) {
+            const tags = item.tags ? item.tags.join(" • ") : "";
+
+            return `
+                <div class="w-full h-full">
+                    <!-- Banner image -->
+                    <div class="relative h-40 w-full bg-black">
+                        ${item.image
+                            ? `<div class="absolute inset-0 bg-[url('${item.image}')] bg-cover bg-center"></div>`
+                            : `<div class="absolute inset-0 ${item.gradient || 'bg-gray-800'}"></div>`
+                        }
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="p-4 space-y-3">
+                        <div class="flex items-center gap-2 text-xs text-gray-400 mb-1">
+                            ${item.match ? `<span class="text-green-400 font-semibold">${item.match}</span>` : ""}
+                            ${item.year ? `<span>${item.year}</span>` : ""}
+                            <span class="border border-gray-500 px-1 text-[10px] rounded">HD</span>
+                            ${item.category ? `<span class="text-purple-300">${item.category}</span>` : ""}
+                        </div>
+
+                        <h3 class="text-base md:text-lg font-bold text-white leading-tight">
+                            ${item.title}
+                        </h3>
+
+                        <p class="text-[11px] text-gray-300 line-clamp-3">
+                            ${item.preview || item.desc || ""}
+                        </p>
+
+                        <!-- Buttons like Netflix/Prime -->
+                        <div class="flex items-center gap-2 mt-2">
+                            <button class="flex items-center justify-center rounded-full bg-white text-black w-8 h-8"
+                                    onclick="openModalById(${item.id}); event.stopPropagation();">
+                                <i data-lucide="play" class="w-4 h-4 fill-black"></i>
+                            </button>
+                            <button class="flex items-center justify-center rounded-full border border-gray-500 w-8 h-8">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                            </button>
+                            <button class="flex items-center justify-center rounded-full border border-gray-500 w-8 h-8">
+                                <i data-lucide="thumbs-up" class="w-4 h-4"></i>
+                            </button>
+                            <button class="flex items-center justify-center rounded-full border border-gray-500 w-8 h-8 ml-auto"
+                                    onclick="openModalById(${item.id}); event.stopPropagation();">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Tags -->
+                        ${tags
+                            ? `<div class="text-[10px] text-gray-400 mt-2">${tags}</div>`
+                            : ""}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showHoverCard(id, tileEl) {
+            clearTimeout(hoverHideTimeout);
+
+            const item = allItems.find(i => i.id === id);
+            if (!item) return;
+
+            const card = document.getElementById('hover-card');
+            card.innerHTML = buildHoverCardHtml(item);
+
+            // Position relative to tile
+            const rect = tileEl.getBoundingClientRect();
+            const cardWidth = 360;
+            const margin = 16;
+
+            let left = rect.left;
+            // Clamp horizontally so it doesn't overflow screen
+            if (left + cardWidth + margin > window.innerWidth) {
+                left = window.innerWidth - cardWidth - margin;
+            }
+            if (left < margin) left = margin;
+
+            let top = rect.top - 20; // slightly above
+            const minTop = 72;       // avoid covering navbar too much
+            if (top < minTop) top = rect.bottom + 8; // put below if too high
+
+            card.style.left = `${left}px`;
+            card.style.top = `${top}px`;
+            card.style.display = 'block';
+
+            // trigger animation
+            requestAnimationFrame(() => {
+                card.classList.add('visible');
+                lucide.createIcons(); // icons inside the card
+            });
+
+            // keep card alive if hovered
+            card.onmouseenter = () => clearTimeout(hoverHideTimeout);
+            card.onmouseleave = () => scheduleHideHoverCard();
+        }
+
+        function scheduleHideHoverCard() {
+            clearTimeout(hoverHideTimeout);
+            hoverHideTimeout = setTimeout(() => {
+                const card = document.getElementById('hover-card');
+                card.classList.remove('visible');
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 180); // match CSS transition
+            }, 200); // small delay like Netflix/Prime
+        }
+
+        // --- RECOMMENDATION HOVER CARD ---
+        let recommendationHoverHideTimeout;
+
+        function showRecommendationHoverCard(id, tileEl) {
+            clearTimeout(recommendationHoverHideTimeout);
+
+            const rec = recommendationsData.find(r => r.id === id);
+            if (!rec) return;
+
+            const card = document.getElementById('recommendation-hover-card');
+            
+            card.innerHTML = `
+                <div class="hover-card-image" style="background-image: url('${rec.image}');"></div>
+                <div class="hover-card-content">
+                    <div class="hover-card-title">${rec.reviewer}</div>
+                    <div class="hover-card-meta">
+                        <span>${rec.role}</span>
+                        <span>•</span>
+                        <span>${rec.company}</span>
+                        <span>•</span>
+                        <span class="match">${rec.match}</span>
+                    </div>
+                    <div class="hover-card-description">${rec.fullReview}</div>
+                    <div class="flex gap-2 mb-3 items-center">
+                        <div class="bg-white rounded-full p-2 cursor-pointer hover:bg-gray-200 transition" onclick="openRecommendationModal(${rec.id})">
+                            <i data-lucide="play" class="fill-black w-4 h-4"></i>
+                        </div>
+                        <a href="${rec.linkedinUrl}" target="_blank" rel="noopener" class="border-2 border-white rounded-full p-2 cursor-pointer hover:bg-white/20 transition">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm mb-2">
+                        <span class="text-yellow-400 font-bold">${rec.rating}⭐</span>
+                        <span class="text-gray-500">•</span>
+                        <span class="text-gray-400">${rec.year}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        ${rec.tags.map(tag => `<span class="text-xs text-gray-300 bg-gray-800 px-2 py-1 rounded">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Position relative to tile
+            const rect = tileEl.getBoundingClientRect();
+            const cardWidth = 360;
+            const margin = 16;
+
+            let left = rect.right + margin; // right of tile
+            if (left + cardWidth > window.innerWidth) {
+                left = rect.left - cardWidth - margin; // left of tile if no space
+            }
+            if (left < margin) left = margin;
+
+            let top = rect.top + (rect.height / 2) - 180; // center vertically
+            const minTop = 72;
+            if (top < minTop) top = minTop;
+            if (top + 400 > window.innerHeight) top = window.innerHeight - 400 - margin;
+
+            card.style.left = `${left}px`;
+            card.style.top = `${top}px`;
+            card.style.display = 'block';
+
+            requestAnimationFrame(() => {
+                card.classList.add('visible');
+                lucide.createIcons();
+            });
+
+            card.onmouseenter = () => clearTimeout(recommendationHoverHideTimeout);
+            card.onmouseleave = () => scheduleHideRecommendationHoverCard();
+        }
+
+        function scheduleHideRecommendationHoverCard() {
+            clearTimeout(recommendationHoverHideTimeout);
+            recommendationHoverHideTimeout = setTimeout(() => {
+                const card = document.getElementById('recommendation-hover-card');
+                card.classList.remove('visible');
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 180);
+            }, 200);
+        }
+        function handleSearch(query) {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const searchContent = document.getElementById('search-results-content');
+            
+            if (!query || query.trim().length === 0) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+
+            const lowerQuery = query.toLowerCase();
+
+            // Filter items from all categories
+            const filteredProjects = projectsData.filter(item =>
+                item.title.toLowerCase().includes(lowerQuery) ||
+                (item.desc && item.desc.toLowerCase().includes(lowerQuery)) ||
+                (item.tags && item.tags.some(t => t.toLowerCase().includes(lowerQuery)))
+            );
+
+            const filteredExperience = experienceData.filter(item =>
+                item.title.toLowerCase().includes(lowerQuery) ||
+                (item.desc && item.desc.toLowerCase().includes(lowerQuery)) ||
+                (item.tags && item.tags.some(t => t.toLowerCase().includes(lowerQuery)))
+            );
+
+            const filteredEducation = [
+                { id: 101, title: "University at Buffalo", preview: "Master of Science in Data Science", year: "Dec 2025", gradient: "bg-blue-900", image: "assets/images/ub_logo.png", tags: ["Technical Skills", "Machine Learning", "Big Data"] },
+                { id: 102, title: "Pune University", preview: "Bachelor of Engineering in Computer Science", year: "May 2021", gradient: "bg-indigo-900", image: "assets/images/pune_university_logo.png", tags: ["Technical Skills", "Software Engineering"] }
+            ].filter(item =>
+                item.title.toLowerCase().includes(lowerQuery) ||
+                (item.preview && item.preview.toLowerCase().includes(lowerQuery)) ||
+                (item.tags && item.tags.some(t => t.toLowerCase().includes(lowerQuery)))
+            );
+
+            const filteredSkills = skillsData.filter(item =>
+                item.title.toLowerCase().includes(lowerQuery) ||
+                (item.tags && item.tags.some(t => t.toLowerCase().includes(lowerQuery)))
+            );
+
+            // Build search results HTML
+            let resultsHtml = `<h2 class="text-2xl font-bold text-white mb-8">Search Results for "<span class="text-red-600">${query}</span>"</h2>`;
+
+            // Projects
+            if (filteredProjects.length > 0) {
+                resultsHtml += buildSearchCategory('Projects', filteredProjects);
+            }
+
+            // Experience
+            if (filteredExperience.length > 0) {
+                resultsHtml += buildSearchCategory('Experience', filteredExperience);
+            }
+
+            // Education
+            if (filteredEducation.length > 0) {
+                resultsHtml += buildSearchCategory('Education', filteredEducation);
+            }
+
+            // Skills
+            if (filteredSkills.length > 0) {
+                resultsHtml += buildSearchCategory('Skills', filteredSkills);
+            }
+
+            // No results message
+            if (filteredProjects.length === 0 && filteredExperience.length === 0 && filteredEducation.length === 0 && filteredSkills.length === 0) {
+                resultsHtml += `<div class="text-center py-12"><p class="text-gray-400 text-lg">No results found for "<span class="text-red-600">${query}</span>"</p></div>`;
+            }
+
+            searchContent.innerHTML = resultsHtml;
+            searchResults.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function buildSearchCategory(categoryName, items) {
+            let html = `<div class="search-result-category"><h3>${categoryName}</h3><div class="flex flex-wrap gap-4">`;
+
+            items.forEach(item => {
+                const cardWidthClass = categoryName === 'Skills' ? 'w-[150px] h-[220px]' : 'w-[250px] h-[170px]';
+                
+                html += `
+                    <div onclick="openModalById(${item.id}); clearSearch();"
+                         class="relative flex-shrink-0 rounded-md bg-[#181818] cursor-pointer tile-hover shadow-lg ${cardWidthClass}"
+                         style="overflow: visible;">
+                        <div class="w-full h-full relative overflow-hidden">
+                            ${item.image ? `<div class="absolute inset-0 bg-[url('${item.image}')] bg-cover bg-center brightness-125"></div>` : ''}
+                            <div class="absolute inset-0 ${(item.gradient || 'bg-gray-800')}"></div>
+                            <div class="relative w-full h-full flex items-start justify-start p-4 text-left font-bold text-gray-200 bg-gradient-to-b from-black/40 to-transparent">
+                                ${categoryName === 'Skills' ? `<div class="flex flex-col items-center gap-2"><span class="text-3xl">${item.icon}</span><span class="text-sm">${item.title}</span></div>` : item.title}
+                            </div>
+                        </div>
+                        <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-between p-3 rounded-md">
+                            <div>
+                                ${item.year ? `<div class="text-[10px] text-gray-400 mb-1">${item.year}</div>` : ''}
+                                ${item.preview ? `<div class="text-[10px] text-gray-200 mb-2 leading-tight">${item.preview}</div>` : ''}
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 text-[10px] text-green-400 font-bold">
+                                    <span>${item.match || '98%'}</span>
+                                </div>
+                                <div class="flex flex-wrap gap-1 mt-1">
+                                    ${(item.tags || []).slice(0, 3).map(t => `<span class="text-[10px] text-gray-200">• ${t}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div></div>`;
+            return html;
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-results').classList.add('hidden');
+        }
+    </script>
+
+    <!-- HOVER CARD (Netflix-style) -->
+    <div id="hover-card" class="hover-card" style="display: none;"></div>
+</body>
+</html>
