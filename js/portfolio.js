@@ -318,17 +318,22 @@ function renderProjectsRow() {
 function renderProjectTile(project) {
     return `
     <div class="relative tile-hover w-[350px] rounded-md overflow-hidden cursor-pointer group border border-white/10"
+         role="button" tabindex="0"
          onclick="hideHoverCard(); openModal('project', ${project.id});"
          onmouseenter="showHoverCard(event, ${project.id}, 'project')" 
-         onmouseleave="hideHoverCard()">
+         onmouseleave="hideHoverCard()"
+         onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openModal('project', ${project.id}); }">
 
-        <img src="${project.image}" class="w-full h-40 object-cover" onclick="openModal('project', ${project.id}); event.stopPropagation();" />
+    <img src="${project.image}" class="w-full h-40 object-cover" alt="${project.title} preview" />
 
-        <div class="absolute inset-0 tile-overlay opacity-0 group-hover:opacity-100 
-                transition bg-gradient-to-t from-black/80 to-transparent" onclick="openModal('project', ${project.id}); event.stopPropagation();">
+        <div class="absolute inset-0 tile-overlay opacity-0 group-hover:opacity-100 transition bg-gradient-to-t from-black/70 to-transparent flex items-end p-3">
+            <button class="bg-white text-black px-4 py-2 rounded font-bold text-sm shadow hover:bg-white/90"
+                    onclick="openModal('project', ${project.id}); event.stopPropagation();">
+                <i data-lucide="play" class="w-4 h-4"></i> Play
+            </button>
         </div>
 
-        <div class="p-3" onclick="openModal('project', ${project.id}); event.stopPropagation();">
+    <div class="p-3">
             <p class="text-xs text-green-400 font-bold">${project.match}</p>
             <p class="text-white font-semibold truncate">${project.title}</p>
             <p class="text-gray-400 text-xs">${project.year}</p>
@@ -360,9 +365,11 @@ function renderExperienceRow() {
 function renderExperienceTile(exp) {
     return `
     <div class="relative tile-hover w-[320px] rounded-md overflow-hidden cursor-pointer group border border-white/10"
-         onclick="openModal('experience', ${exp.id})">
+         role="button" tabindex="0"
+         onclick="openModal('experience', ${exp.id})"
+         onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openModal('experience', ${exp.id}); }">
 
-        <img src="${exp.image}" class="w-full h-40 object-cover" />
+        <img src="${exp.image}" class="w-full h-40 object-cover" alt="${exp.title} image" />
 
         <div class="absolute inset-0 tile-overlay opacity-0 group-hover:opacity-100 
                     transition bg-gradient-to-t from-black/80 to-transparent">
@@ -399,7 +406,9 @@ function renderSkillsHeatmap() {
 
 function renderSkillTile(skill) {
     return `
-    <div class="skill-heatmap-tile" onclick="openModal('skill', ${skill.id})">
+    <div class="skill-heatmap-tile" role="button" tabindex="0"
+         onclick="openModal('skill', ${skill.id})"
+         onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openModal('skill', ${skill.id}); }">
 
         <div class="skill-heatmap-header">
             <div class="skill-heatmap-icon">${skill.icon}</div>
@@ -1140,6 +1149,7 @@ window.addEventListener("scroll", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderRows();              // Build all page rows
+    enableTileAccessibility(); // Ensure keyboard activation works
     if (typeof lucide !== "undefined") {
         lucide.createIcons();  // Activate icons
     }
@@ -1150,4 +1160,31 @@ function openModalById(id) {
     const item = combined.find(x => x.id === id);
 
     if (item) openModal("project", id); // fallback type
+}
+
+// ======================================================
+// ACCESSIBILITY: Enable keyboard activation on tiles
+// ======================================================
+function enableTileAccessibility() {
+    const tiles = document.querySelectorAll('.tile-hover, .skill-heatmap-tile');
+    tiles.forEach(tile => {
+        // Make focusable if not already
+        if (!tile.hasAttribute('tabindex')) tile.setAttribute('tabindex', '0');
+        if (!tile.hasAttribute('role')) tile.setAttribute('role', 'button');
+    });
+
+    // Event delegation to reliably capture keydown on any tile
+    const container = document.getElementById('rows-container');
+    if (container) {
+        container.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (key !== 'Enter' && key !== ' ') return;
+
+            const tile = event.target.closest('.tile-hover, .skill-heatmap-tile');
+            if (!tile) return;
+
+            event.preventDefault();
+            tile.click();
+        }, true);
+    }
 }

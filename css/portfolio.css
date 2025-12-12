@@ -1,3 +1,16 @@
+/* Focus styles for interactive tiles */
+.tile-hover:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #ef4444; /* visible outside overlay */
+    border-color: #ef4444;
+}
+
+.skill-heatmap-tile:focus-visible {
+    outline: 2px solid #ef4444;
+    outline-offset: 2px;
+}
+
+/* Keep overlay interactive (for clicks), rely on outline visibility */
 /* ================================
    GLOBAL BASE STYLES
 ================================ */
