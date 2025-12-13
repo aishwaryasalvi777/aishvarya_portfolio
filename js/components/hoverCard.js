@@ -5,8 +5,26 @@ import { recommendationsData } from "../data/recommendations.js";
 
 let hoverCardTimer = null;
 let hoverCardEl = null;
+let hoverPreviewRoot = null;
+
+// Create global overlay root - MUST be outside any transformed elements
+function ensureHoverPreviewRoot() {
+  if (!hoverPreviewRoot) {
+    hoverPreviewRoot = document.createElement("div");
+    hoverPreviewRoot.id = "hover-preview-root";
+    hoverPreviewRoot.style.cssText = `
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10000;
+    `;
+    document.body.appendChild(hoverPreviewRoot);
+  }
+  return hoverPreviewRoot;
+}
 
 function ensureHoverCardExists() {
+  const root = ensureHoverPreviewRoot();
   if (!hoverCardEl) {
     hoverCardEl = document.createElement("div");
     hoverCardEl.id = "hover-card";
@@ -31,7 +49,7 @@ function ensureHoverCardExists() {
       openHoverCardItem();
     });
 
-    document.body.appendChild(hoverCardEl);
+    root.appendChild(hoverCardEl);
   }
 }
 
@@ -123,6 +141,9 @@ function positionHoverCard(tile) {
   if (left < margin) left = margin;
   if (top < 80) top = rect.bottom + 10;
 
+  // Critical: explicitly set position fixed and pointer-events
+  hoverCardEl.style.position = "fixed";
+  hoverCardEl.style.pointerEvents = "auto";
   hoverCardEl.style.left = `${left}px`;
   hoverCardEl.style.top = `${top}px`;
 }

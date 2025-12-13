@@ -15,12 +15,24 @@
    GLOBAL BASE STYLES
 ================================ */
 
-body { 
+html, body {
+    height: auto;
+    overflow-x: hidden;
+}
+
+body {
     font-family: 'Roboto', sans-serif; 
     background: #141414;
     color: #ffffff;
-    overflow-x: hidden;
-    min-height: 100vh;
+    min-height: unset; /* IMPORTANT */
+}
+
+/* Global hover preview root - MUST stay viewport-pinned */
+#hover-preview-root {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
 }
 
 /* Hide Scrollbar but allow scrolling */
@@ -1465,3 +1477,4 @@ body {
 
 /* Hidden state utility remains respected */
 .carousel-btn.hidden { display: none; }
+
