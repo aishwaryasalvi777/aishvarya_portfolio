@@ -52,7 +52,7 @@ function buildMainModalHTML(item) {
   const background = item.image ? `background-image:url('${item.image}')` : item.gradient || "bg-gray-800";
 
   return `
-    <button class="absolute top-4 right-4 p-2 rounded-full bg-[#222] hover:bg-[#333]" onclick="closeModal()">
+    <button class="modal-close-btn absolute top-4 right-4 p-3 rounded-full bg-black/60 hover:bg-black/80 border border-white/20 transition-all" onclick="closeModal()" aria-label="Close">
         <i data-lucide="x" class="text-white w-6 h-6"></i>
     </button>
     <div class="h-[250px] w-full bg-cover bg-center relative" style="${background}">
@@ -71,6 +71,12 @@ function buildMainModalHTML(item) {
         ${linksHTML ? `<div class="flex flex-wrap gap-3 pt-2">${linksHTML}</div>` : ""}
         ${tagsHTML ? `<div class="flex flex-wrap gap-2 pt-3">${tagsHTML}</div>` : ""}
         ${pointsHTML ? `<div><h3 class="text-xl font-bold mb-3 text-white">Highlights</h3><ul class="list-disc list-inside space-y-2">${pointsHTML}</ul></div>` : ""}
+        <div class="flex justify-end pt-4 border-t border-gray-700">
+            <button class="modal-cancel-btn px-6 py-3 rounded-lg bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all flex items-center gap-2" onclick="closeModal()">
+                <i data-lucide="x-circle" class="w-5 h-5"></i>
+                Cancel
+            </button>
+        </div>
     </div>
   `;
 }

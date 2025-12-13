@@ -570,9 +570,9 @@ body {
     min-height: 300px;
     position: relative;
     overflow: visible !important;
-    flex: 0 0 400px;
-    min-width: 600px;
-    max-width: 400px;
+    flex: 0 0 350px;
+    min-width: 350px;
+    max-width: 350px;
     z-index: 1;
 }
 

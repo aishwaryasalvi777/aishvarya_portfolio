@@ -1,10 +1,18 @@
 export function renderProjectsRow(projectsData) {
   const section = document.createElement("div");
-  section.classList.add("animate-row");
+  section.classList.add("animate-row", "carousel-container");
   section.innerHTML = `
         <h2 class="text-white text-xl md:text-2xl font-bold mb-3 mt-10">Projects</h2>
-        <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-            ${projectsData.map(renderProjectTile).join("")}
+        <div class="carousel-wrapper">
+            <button class="carousel-btn carousel-btn-left hidden" aria-label="Scroll left">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="carousel-scroll flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+                ${projectsData.map(renderProjectTile).join("")}
+            </div>
+            <button class="carousel-btn carousel-btn-right" aria-label="Scroll right">
+                <i data-lucide="chevron-right"></i>
+            </button>
         </div>
     `;
   return section;
@@ -12,7 +20,7 @@ export function renderProjectsRow(projectsData) {
 
 function renderProjectTile(project) {
   return `
-    <div class="relative tile-hover w-[350px] rounded-md overflow-hidden cursor-pointer group border border-white/10"
+    <div class="relative tile-hover w-[350px] flex-shrink-0 rounded-md overflow-hidden cursor-pointer group border border-white/10"
          role="button" tabindex="0"
          onclick="hideHoverCard(); openModal('project', ${project.id});"
          onmouseenter="showHoverCard(event, ${project.id}, 'project')" 

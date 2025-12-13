@@ -13,6 +13,7 @@ import { showHoverCard, hideHoverCard, showRecommendationHoverCard } from "./com
 import { openModal, closeModal, initModalBackdrop, openRecommendationModal, closeRecommendationModal } from "./components/modals.js";
 import { handleSearch, clearSearch } from "./components/search.js";
 import { enableTileAccessibility } from "./components/accessibility.js";
+import { initAllCarousels } from "./utils/carousel.js";
 
 function renderRows() {
   const container = document.getElementById("rows-container");
@@ -21,6 +22,14 @@ function renderRows() {
   container.appendChild(renderExperienceRow(experienceData));
   container.appendChild(renderSkillsHeatmap(skillsData));
   container.appendChild(renderRecommendationsRow(recommendationsData));
+  
+  // Initialize carousels after rows are rendered
+  setTimeout(() => {
+    initAllCarousels();
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
+  }, 100);
 }
 
 function openModalById(id) {
