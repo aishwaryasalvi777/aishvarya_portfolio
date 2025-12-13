@@ -1262,3 +1262,206 @@ body {
 .text-shadow-lg {
     text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
+
+/* =====================================================
+   CAROUSEL — Overlay Arrows + Edge Gradients
+===================================================== */
+
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden; /* clip hover cards within the row */
+}
+
+/* Soft edge gradients like streaming apps */
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.carousel-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(20,20,20,0.95), rgba(20,20,20,0.0));
+}
+
+.carousel-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(20,20,20,0.95), rgba(20,20,20,0.0));
+}
+
+/* Scroll container hint */
+.carousel-scroll {
+    scroll-behavior: smooth;
+}
+
+/* Prime-like circular overlay arrows */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    cursor: pointer;
+    z-index: 10; /* Above gradients */
+    opacity: 5.8; /* Visible by default */
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Chevron icon sizing inside arrow buttons */
+.carousel-btn i,
+.carousel-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Reveal arrows when user hovers the carousel area */
+.carousel-wrapper:hover .carousel-btn { opacity: 1; }
+.carousel-wrapper:focus-within .carousel-btn { opacity: 1; }
+
+.carousel-btn-left { left: 8px; }
+.carousel-btn-right { right: 8px; }
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-50%) scale(1.06);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.4);
+}
+
+/* Separate Navigation Layer — arrows overlay (Netflix-style) */
+.carousel-nav {
+    position: absolute;
+    inset: 0;            /* cover the whole wrapper */
+    display: flex;
+    align-items: center; /* vertical center for arrows */
+    justify-content: space-between;
+    pointer-events: none; /* layer ignores pointer events except arrows */
+    z-index: 10001;       /* ensure above any hover-card */
+}
+.carousel-nav .carousel-btn {
+    pointer-events: auto; /* arrows accept clicks */
+    z-index: 10002;       /* highest interactive element */
+}
+
+/* Add backdrop regions behind arrows to block tile hover */
+.carousel-nav::before,
+.carousel-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px; /* wider than arrow button */
+    pointer-events: auto; /* block hover events from passing through */
+    z-index: 10001;
+}
+.carousel-nav::before { left: 0; }
+.carousel-nav::after { right: 0; }
+.carousel-wrapper:hover .carousel-nav .carousel-btn {
+    opacity: 1; /* arrows appear only on hover over the container */
+}
+
+/* Ensure tiles sit below nav layer */
+.carousel-wrapper .tile-hover { z-index: 1; }
+.carousel-wrapper .tile-overlay { z-index: 2; }
+.carousel-wrapper .hover-card { z-index: 1000 !important; }
+
+/* =====================================================
+   ALT CAROUSEL — .carousel-row / .carousel-track
+   Matches user requirements (chevrons, hover-only arrows)
+===================================================== */
+.carousel-row {
+    position: relative;
+    padding: 8px 0;
+    overflow: hidden; /* requirement: hidden on the row */
+}
+
+.carousel-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto; /* scrolling happens on the track */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* Add horizontal padding so arrows don't overlap tiles */
+    padding: 0 72px;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-card {
+    flex: 0 0 auto;
+    width: 350px; /* fixed card width assumption */
+    height: 200px; /* example height */
+    border-radius: 12px;
+    background: #1f1f1f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 28px; /* chevron size */
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    cursor: pointer;
+    opacity: 0; /* hidden by default */
+    transition: opacity 200ms ease, transform 200ms ease, background 200ms ease;
+    z-index: 10; /* above tiles & overlays */
+    pointer-events: auto; /* ensure clicks land on arrow */
+}
+.carousel-row:hover .carousel-arrow { opacity: 1; }
+.carousel-arrow.left { left: 8px; }
+.carousel-arrow.right { right: 8px; }
+.carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: translateY(-50%) scale(1.06);
+}
+
+/* Optional edge gradients for Netflix-style fade */
+.carousel-row::before,
+.carousel-row::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    pointer-events: none;
+    z-index: 1;
+}
+.carousel-row::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(20,20,20,0.95), rgba(20,20,20,0));
+}
+.carousel-row::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(20,20,20,0.95), rgba(20,20,20,0));
+}
+
+/* Hidden state utility remains respected */
+.carousel-btn.hidden { display: none; }

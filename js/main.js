@@ -14,6 +14,7 @@ import { openModal, closeModal, initModalBackdrop, openRecommendationModal, clos
 import { handleSearch, clearSearch } from "./components/search.js";
 import { enableTileAccessibility } from "./components/accessibility.js";
 import { initAllCarousels } from "./utils/carousel.js";
+import { initAllCarouselRows } from "./utils/carouselRow.js";
 
 function renderRows() {
   const container = document.getElementById("rows-container");
@@ -26,6 +27,7 @@ function renderRows() {
   // Initialize carousels after rows are rendered
   setTimeout(() => {
     initAllCarousels();
+    initAllCarouselRows();
     if (typeof lucide !== "undefined") {
       lucide.createIcons();
     }

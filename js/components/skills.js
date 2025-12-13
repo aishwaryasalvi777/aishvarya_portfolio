@@ -1,19 +1,23 @@
 export function renderSkillsHeatmap(skillsData) {
   const section = document.createElement("div");
-  section.classList.add("animate-row", "carousel-container");
+    section.classList.add("animate-row", "carousel-container");
 
   section.innerHTML = `
         <h2 class="text-white text-xl md:text-2xl font-bold mb-3 mt-10">Skills</h2>
         <div class="carousel-wrapper">
-            <button class="carousel-btn carousel-btn-left hidden" aria-label="Scroll left">
-                <i data-lucide="chevron-left"></i>
-            </button>
+            <!-- Scroll Row (cards, hover previews) -->
             <div class="carousel-scroll flex gap-4 overflow-x-auto hide-scrollbar pb-4">
                 ${skillsData.map(renderSkillTile).join("")}
             </div>
-            <button class="carousel-btn carousel-btn-right" aria-label="Scroll right">
-                <i data-lucide="chevron-right"></i>
-            </button>
+            <!-- Navigation Layer (arrows in separate overlay) -->
+            <div class="carousel-nav" aria-hidden="false">
+                <button class="carousel-btn carousel-btn-left hidden" aria-label="Scroll left">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-btn-right" aria-label="Scroll right">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
         </div>
     `;
   return section;
