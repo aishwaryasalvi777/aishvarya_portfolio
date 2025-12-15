@@ -1,5 +1,11 @@
 export function initCarousel(container) {
-  const scrollContainer = container.querySelector('.carousel-scroll');
+  // Prefer the actual horizontal scroller nested inside the generic .carousel-scroll
+  const outerScroll = container.querySelector('.carousel-scroll');
+  const nestedScroller = outerScroll?.querySelector('.recommendations-scroll-container')
+    || outerScroll?.querySelector('.projects-scroll-container')
+    || outerScroll?.querySelector('.experience-scroll-container')
+    || outerScroll?.querySelector('.skills-scroll-container');
+  const scrollContainer = nestedScroller || outerScroll;
   const leftBtn = container.querySelector('.carousel-btn-left');
   const rightBtn = container.querySelector('.carousel-btn-right');
   

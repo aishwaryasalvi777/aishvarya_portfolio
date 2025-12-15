@@ -5,9 +5,6 @@ export function renderRecommendationsRow(recommendationsData) {
         <h2 class="text-white text-xl md:text-2xl font-bold mb-5">Recommendations</h2>
 
         <div class="carousel-wrapper">
-            <button class="carousel-btn carousel-btn-left hidden" aria-label="Scroll left">
-                <i data-lucide="chevron-left"></i>
-            </button>
             <div class="carousel-scroll recommendations-scroll-wrapper">
                 <div class="recommendations-scroll-container">
                     <div class="recommendations-row">
@@ -15,9 +12,14 @@ export function renderRecommendationsRow(recommendationsData) {
                     </div>
                 </div>
             </div>
-            <button class="carousel-btn carousel-btn-right" aria-label="Scroll right">
-                <i data-lucide="chevron-right"></i>
-            </button>
+            <div class="carousel-nav">
+                <button class="carousel-btn carousel-btn-left hidden" aria-label="Scroll left">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-btn-right" aria-label="Scroll right">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
         </div>
     `;
   return section;

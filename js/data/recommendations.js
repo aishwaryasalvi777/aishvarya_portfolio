@@ -1,98 +1,126 @@
-export const recommendationsData = [
-  {
-    id: 200,
-    reviewer: "Harshal Patil",
-    role: "Data Engineer | Data Analyst",
-    company: "Troy & Banks",
-    year: "2025",
-    image: "assets/images/recomm_Harshal.png",
-    excerpt: "Exceptional work ethic, keen desire to learn, and genuine willingness to support peers with deep understanding of data science.",
-    fullReview: "I have had the pleasure of working closely with Aishvarya Salvi as a classmate, project partner, and teammate in university competitions and academic projects at the University at Buffalo. Aishvarya stands out for her exceptional work ethic, keen desire to learn, and genuine willingness to support her peers. Throughout our collaborations, Aishvarya has consistently demonstrated a deep understanding of data science concepts and remarkable proficiency in SQL, Python, Tableau, and Power BI tools. Whether we were tackling a challenging group project or competing as a team, she always brought thoughtful insights, strong analytical skills, and a positive, can-do attitude. What truly sets Aishvarya apart is her dedication and reliability. She takes initiative, is always eager to contribute, and goes above and beyond to help her teammates succeed. Her commitment to quality and her ability to solve complex problems efficiently have made a significant impact on our collective results. Aishvarya is a supportive and approachable teammate who creates a collaborative and motivating environment.",
-    tags: ["Work Ethic", "Data Science", "Collaboration"],
-    match: "Featured",
-    gradientStart: "#722F37",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/harshal-patil"
-  },
-  {
-    id: 201,
-    reviewer: "Anirudh Mhaske",
-    role: "Cloud Engineer | AI/ML Specialist",
-    company: "University at Buffalo",
-    year: "2025",
-    image: "assets/images/recomm_Anirudh.png",
-    excerpt: "Explained complex ML concepts in such a clear and approachable way that made the entire pipeline easy to grasp.",
-    fullReview: "I had the chance to learn from Aishvarya when she walked me through her Heart Attack Risk Prediction project. She explained complex ML concepts in such a clear and approachable way that it made the entire pipeline, from data prep to deployment, easy to grasp. Her strong technical skills and willingness to share knowledge truly inspired me, and I'm confident she'll bring the same clarity and dedication to any project she undertakes. She has a remarkable ability to mentor and lift up those around her.",
-    tags: ["Knowledge Sharing", "ML Expertise", "Mentorship"],
-    match: "Top Review",
-    gradientStart: "#2d1b3d",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/anirudh-mhaske"
-  },
-  {
-    id: 202,
-    reviewer: "Sneha Parsekar",
-    role: "Sr. QA Manager",
-    company: "Mediaocean",
-    year: "2024",
-    image: "assets/images/recomm_Sneha.png",
-    excerpt: "Highly organized, efficient, and brought positive energy with a can-do attitude to every task.",
-    fullReview: "As a manager, I found Aishvarya to be highly organized and efficient. As a team member, Aishvarya always brought a positive energy and a can-do attitude. She was quick to lend a helping hand and support her colleagues whenever needed. Her reliability and proactive approach made her a valued member of our team. She consistently demonstrated professionalism and dedication in everything she undertook.",
-    tags: ["Organization", "Team Leadership", "Reliability"],
-    match: "Featured",
-    gradientStart: "#1a2332",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/sneha-parsekar"
-  },
-  {
-    id: 203,
-    reviewer: "Vishal Sonar",
-    role: "Senior Software Developer",
-    company: "Mediaocean",
-    year: "2024",
-    image: "assets/images/recomm_Vishal.png",
-    excerpt: "Strong technical skills, problem-solving mindset, unique blend of technical expertise with leadership qualities and mentoring abilities.",
-    fullReview: "I had the pleasure of working with Aishvarya at Mediaocean, where we were part of the same team. From day one, she stood out for her strong technical skills, problem-solving mindset, and ability to quickly adapt to challenges. Aishvarya not only delivered high-quality work consistently but also brought great energy and collaboration to the team. She has a unique blend of technical expertise and leadership qualities of always willing to guide others, share knowledge, and take initiative to improve processes. She successfully led projects, supported the team through challenges, and even trained new interns, ensuring they felt comfortable and confident in their roles. Her teamwork, leadership, and mentoring abilities made a real difference in our team's success. What stood out to me was her eye for detail and her ability to think beyond just finding bugs. She understood the product deeply and always considered the end-user experience, making her feedback incredibly valuable for the team. Reliable, approachable, and proactive.",
-    tags: ["Technical Leadership", "Mentorship", "Problem Solving"],
-    match: "Top Review",
-    gradientStart: "#3d2a1f",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/vishal-sonar"
-  },
-  {
-    id: 204,
-    reviewer: "Prasanna Wadekar",
-    role: "Lead Engineer | Microservices Developer",
-    company: "Mediaocean",
-    year: "2024",
-    image: "assets/images/recomm_Prasanna.png",
-    excerpt: "Detail-oriented testing, automated most of product improving team efficiency, exceptional client communication, strong leadership.",
-    fullReview: "I had the opportunity to work closely with Aishvarya at Mediaocean, where she played a key role in ensuring the quality and reliability of our products. As a developer, I truly appreciated how detail-oriented and thorough she was in her testing, which made my job so much easier. She didn't just stop at identifying issues—she always provided clear insights, reproducible cases, and even suggestions for improvement. Over time Aishvarya developed a strong interest in automation and went on to automate most of the product, covering both front-end and back-end processes. This not only saved the team a significant amount of time but also improved the consistency and efficiency of our testing cycles. She also represented our team exceptionally well, presenting the product to clients during releases and showcasing both her technical expertise and communication skills. Aishvarya was a great collaborator, bridging the gap between development and testing seamlessly. She understood the product deeply, kept the end-user experience in mind, and worked closely with us to make sure every release was smooth and successful. She took initiative in mentoring new interns and guiding the team whenever needed, showing strong leadership alongside her technical strengths. Beyond her professional contributions, Aishvarya was approachable, supportive, and a positive influence in the workplace.",
-    tags: ["QA Excellence", "Automation", "Team Leadership"],
-    match: "Featured",
-    gradientStart: "#1a3d3d",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/prasanna-wadekar"
-  },
-  {
-    id: 205,
-    reviewer: "Arjun Gurung",
-    role: "Software Developer",
-    company: "Mediaocean",
-    year: "2024",
-    image: "assets/images/recomm_Arjun.png",
-    excerpt: "Outstanding work ethic and exceptional attention to detail. Identifies complex edge cases that traditional testing might miss.",
-    fullReview: "I highly recommend Aishvarya for her outstanding work ethic and exceptional attention to detail. Collaborating with her during development, her comprehensive and insightful QA testing has been invaluable to the team. Aishvarya consistently identifies complex edge cases and performance bottlenecks that traditional testing might miss, directly leading to more robust and reliable backend systems. Her meticulous approach to testing and deep understanding of system architecture made her an invaluable partner in development. Any team would be lucky to have her.",
-    tags: ["Testing Excellence", "Attention to Detail", "Performance"],
-    match: "Top Review",
-    gradientStart: "#3d1f2d",
-    gradientEnd: "#141414",
-    rating: 5,
-    linkedinUrl: "https://linkedin.com/in/arjun-gurung"
-  }
+const DEFAULT_GRADIENTS = [
+  { start: "#1a3d3d", end: "#0f172a" },
+  { start: "#3d1f2d", end: "#0f172a" },
+  { start: "#2d1b3d", end: "#0f172a" },
+  { start: "#1f2937", end: "#0f172a" },
+  { start: "#3d2a1f", end: "#0f172a" },
+  { start: "#1a2332", end: "#0f172a" },
 ];
+
+function splitCSVLine(line) {
+  const fields = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    const next = line[i + 1];
+    if (ch === '"') {
+      if (inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (ch === "," && !inQuotes) {
+      fields.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  fields.push(current);
+  return fields;
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const headers = splitCSVLine(lines[0]).map(h => h.trim());
+  return lines
+    .slice(1)
+    .filter(l => l.trim())
+    .map(line => {
+      const cols = splitCSVLine(line);
+      const obj = {};
+      headers.forEach((h, idx) => {
+        obj[h] = (cols[idx] || "").replace(/^"|"$/g, "").trim();
+      });
+      return obj;
+    });
+}
+
+function deriveYear(creationDate) {
+  const match = (creationDate || "").match(/(\d{2})\/(\d{2})\/(\d{2})/);
+  if (!match) return "";
+  const [, , , yy] = match;
+  return `20${yy}`;
+}
+
+function parseCreationDate(creationDate) {
+  const match = (creationDate || "").match(/(\d{2})\/(\d{2})\/(\d{2})/);
+  if (!match) return Number.POSITIVE_INFINITY;
+  const [_, mm, dd, yy] = match;
+  const fullYear = 2000 + parseInt(yy, 10);
+  const month = parseInt(mm, 10) - 1;
+  const day = parseInt(dd, 10);
+  return new Date(fullYear, month, day).getTime();
+}
+
+function buildRecommendation(row, idx) {
+  const reviewer = `${row["First Name"] || ""} ${row["Last Name"] || ""}`.trim();
+  const role = row["Job Title"] || "Colleague";
+  const company = row["Company"] || "";
+  const fullReview = row["Text"] || "";
+  const excerpt = fullReview.length > 260 ? `${fullReview.slice(0, 260)}...` : fullReview;
+  const year = deriveYear(row["Creation Date"] || "");
+  const status = (row["Status"] || "").toUpperCase();
+  const gradient = DEFAULT_GRADIENTS[idx % DEFAULT_GRADIENTS.length];
+
+  const imgMap = {
+    "anirudh mhaske": "assets/images/recomm_Anirudh.png",
+    "harshal patil": "assets/images/recomm_Harshal.png",
+    "sneha parsekar": "assets/images/recomm_Sneha.png",
+    "arjun gurung": "assets/images/recomm_Arjun.png",
+    "prasanna wadekar": "assets/images/recomm_Prasanna.png",
+    "vishal sonar": "assets/images/recomm_Vishal.png",
+  };
+  const normalizedName = reviewer.toLowerCase();
+  const image = imgMap[normalizedName] || "";
+
+  return {
+    id: 300 + idx,
+    reviewer: reviewer || "Anonymous",
+    role,
+    company,
+    year,
+    image,
+    excerpt,
+    fullReview,
+    tags: [role, company].filter(Boolean),
+    match: status === "VISIBLE" ? "Featured" : "Pending",
+    gradientStart: gradient.start,
+    gradientEnd: gradient.end,
+    rating: 5,
+    linkedinUrl: ""
+  };
+}
+
+export async function loadRecommendationsFromCSV() {
+  try {
+    const response = await fetch("assets/Recommendations_Received.csv");
+    if (!response.ok) throw new Error(`Failed to load CSV: ${response.status}`);
+    const text = await response.text();
+    const rows = parseCSV(text);
+    const visibleRows = rows
+      .filter(r => (r["Status"] || "").toUpperCase() === "VISIBLE")
+      .sort((a, b) => parseCreationDate(a["Creation Date"]) - parseCreationDate(b["Creation Date"]));
+    return visibleRows.map((row, idx) => buildRecommendation(row, idx));
+  } catch (err) {
+    console.error("Error loading recommendations CSV", err);
+    return [];
+  }
+}
+
+export { parseCSV };

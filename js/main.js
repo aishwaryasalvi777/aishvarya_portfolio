@@ -1,28 +1,32 @@
 import { projectsData } from "./data/projects.js";
 import { experienceData } from "./data/experience.js";
 import { skillsData } from "./data/skills.js";
-import { recommendationsData } from "./data/recommendations.js";
+import { loadRecommendationsFromCSV } from "./data/recommendations.js";
 import { educationData } from "./data/education.js";
 
 import { renderProjectsRow } from "./components/projects.js";
 import { renderExperienceRow } from "./components/experience.js";
+import { renderEducationSection } from "./components/education.js";
 import { renderSkillsHeatmap } from "./components/skills.js";
 import { renderRecommendationsRow } from "./components/recommendations.js";
 
-import { showHoverCard, hideHoverCard, showRecommendationHoverCard } from "./components/hoverCard.js";
-import { openModal, closeModal, initModalBackdrop, openRecommendationModal, closeRecommendationModal } from "./components/modals.js";
+import { showHoverCard, hideHoverCard, showRecommendationHoverCard, setRecommendationHoverData } from "./components/hoverCard.js";
+import { openModal, closeModal, initModalBackdrop, openRecommendationModal, closeRecommendationModal, setRecommendationsData } from "./components/modals.js";
 import { handleSearch, clearSearch } from "./components/search.js";
 import { enableTileAccessibility } from "./components/accessibility.js";
 import { initAllCarousels } from "./utils/carousel.js";
 import { initAllCarouselRows } from "./utils/carouselRow.js";
 
-function renderRows() {
+function renderRows(recommendationsData) {
   const container = document.getElementById("rows-container");
   container.innerHTML = "";
   container.appendChild(renderProjectsRow(projectsData));
   container.appendChild(renderExperienceRow(experienceData));
+  container.appendChild(renderEducationSection(educationData));
   container.appendChild(renderSkillsHeatmap(skillsData));
-  container.appendChild(renderRecommendationsRow(recommendationsData));
+  if (recommendationsData && recommendationsData.length) {
+    container.appendChild(renderRecommendationsRow(recommendationsData));
+  }
   
   // Initialize carousels after rows are rendered
   setTimeout(() => {
@@ -63,8 +67,17 @@ function initAboutModalStub() {
   window.openAboutModal = () => alert("More info coming soon.");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderRows();
+document.addEventListener("DOMContentLoaded", async () => {
+  let recommendations = [];
+  try {
+    recommendations = await loadRecommendationsFromCSV();
+  } catch (err) {
+    console.error("Failed to load recommendations", err);
+  }
+  setRecommendationsData(recommendations);
+  setRecommendationHoverData(recommendations);
+
+  renderRows(recommendations);
   enableTileAccessibility();
   initModalBackdrop();
   initNavbarScroll();

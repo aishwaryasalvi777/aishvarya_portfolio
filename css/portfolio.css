@@ -5,6 +5,27 @@
     border-color: #ef4444;
 }
 
+/* Project ID 1 carousel (Recommendation Engine) */
+.tile-hover[data-project-id="1"] .tile-media {
+    position: relative;
+    overflow: hidden;
+    height: 160px;
+}
+
+.tile-hover[data-project-id="1"] .tile-carousel {
+    display: flex;
+    width: 300%;
+    height: 100%;
+    transition: transform 0.6s ease;
+}
+
+.tile-hover[data-project-id="1"] .tile-carousel img {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .skill-heatmap-tile:focus-visible {
     outline: 2px solid #ef4444;
     outline-offset: 2px;
@@ -530,27 +551,14 @@ body {
     overflow-x: auto;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     padding: 20px;
     padding-bottom: 400px;
 }
 
 .recommendations-scroll-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.recommendations-scroll-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.recommendations-scroll-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-.recommendations-scroll-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    display: none;
 }
 
 .recommendations-row {
@@ -1478,3 +1486,10 @@ body {
 /* Hidden state utility remains respected */
 .carousel-btn.hidden { display: none; }
 
+/* =====================================================
+   EDUCATION SECTION — Match Experience Tiles
+===================================================== */
+
+.education-tile-logo {
+  opacity: 0.8;
+}

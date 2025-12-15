@@ -1,7 +1,12 @@
 import { projectsData } from "../data/projects.js";
 import { experienceData } from "../data/experience.js";
 import { skillsData } from "../data/skills.js";
-import { recommendationsData } from "../data/recommendations.js";
+import { educationData } from "../data/education.js";
+
+let recommendationsData = [];
+export function setRecommendationHoverData(data) {
+  recommendationsData = Array.isArray(data) ? data : [];
+}
 
 let hoverCardTimer = null;
 let hoverCardEl = null;
@@ -61,6 +66,7 @@ export function showHoverCard(event, id, type) {
   if (type === "project") item = projectsData.find(x => x.id === id);
   if (type === "experience") item = experienceData.find(x => x.id === id);
   if (type === "skill") item = skillsData.find(x => x.id === id);
+  if (type === "education") item = educationData.find(x => x.id === id);
 
   if (!item) return;
 
@@ -84,7 +90,7 @@ function openHoverCardItem() {
   if (!type || !idStr) return;
   const id = parseInt(idStr, 10);
   if (Number.isNaN(id)) return;
-  if (type === "project" || type === "experience" || type === "skill") {
+  if (type === "project" || type === "experience" || type === "skill" || type === "education") {
     if (typeof openModal === "function") {
       openModal(type, id);
     }

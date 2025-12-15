@@ -1,11 +1,16 @@
 import { projectsData } from "../data/projects.js";
 import { experienceData } from "../data/experience.js";
 import { skillsData } from "../data/skills.js";
-import { recommendationsData } from "../data/recommendations.js";
+import { educationData } from "../data/education.js";
+let recommendationsData = [];
 
 let mainModal = null;
 let modalBackdrop = null;
 let recommendationModal = null;
+
+export function setRecommendationsData(data) {
+  recommendationsData = Array.isArray(data) ? data : [];
+}
 
 function ensureModalElements() {
   if (!mainModal) mainModal = document.getElementById("modal-content");
@@ -13,11 +18,14 @@ function ensureModalElements() {
 }
 
 export function openModal(type, id) {
+  console.log('openModal called with:', type, id);
   ensureModalElements();
   let item = null;
   if (type === "project") item = projectsData.find(x => x.id === id);
   if (type === "experience") item = experienceData.find(x => x.id === id);
   if (type === "skill") item = skillsData.find(x => x.id === id);
+  if (type === "education") item = educationData.find(x => x.id === id);
+  console.log('Found item:', item);
   if (!item) return;
 
   mainModal.innerHTML = buildMainModalHTML(item);
