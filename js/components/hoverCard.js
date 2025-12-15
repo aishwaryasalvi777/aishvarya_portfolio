@@ -156,8 +156,14 @@ function positionHoverCard(tile) {
 
 function buildHoverCardHTML(item) {
   const tags = item.tags ? item.tags.join(" • ") : "";
+  const imageContent = item.image 
+    ? (item.image.includes('.svg') || item.image.includes('devicon')
+        ? `<div class="hover-card-image" style="display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2);"><img src="${item.image}" alt="${item.title}" style="width: 120px; height: 120px; object-fit: contain;" /></div>`
+        : `<div class="hover-card-image" style="background-image:url('${item.image}')"></div>`)
+    : `<div class="hover-card-image"></div>`;
+  
   return `
-    <div class="hover-card-image" style="background-image:url('${item.image || ""}')"></div>
+    ${imageContent}
     <div class="hover-card-content">
         <div class="hover-card-title">${item.title}</div>
         <div class="hover-card-meta">

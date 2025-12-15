@@ -57,18 +57,29 @@ function buildMainModalHTML(item) {
             <i data-lucide="${index === 0 ? "play" : "file-text"}"></i>
             ${l.label}
         </a>`).join("") : "";
-  const background = item.image ? `background-image:url('${item.image}')` : item.gradient || "bg-gray-800";
+  
+  // Check if this is a skill with SVG image
+  const isSvgImage = item.image && (item.image.includes('.svg') || item.image.includes('devicon'));
+  const headerContent = isSvgImage
+    ? `<div class="h-[250px] w-full flex items-center justify-center relative" style="background: rgba(0,0,0,0.2);">
+        <img src="${item.image}" alt="${item.title}" style="width: 200px; height: 200px; object-fit: contain;" />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent"></div>
+        <div class="absolute bottom-4 left-6">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg">${item.title}</h2>
+        </div>
+      </div>`
+    : `<div class="h-[250px] w-full bg-cover bg-center relative" style="background-image:url('${item.image || ""}')">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
+        <div class="absolute bottom-4 left-6">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg">${item.title}</h2>
+        </div>
+      </div>`;
 
   return `
     <button class="modal-close-btn absolute top-4 right-4 p-3 rounded-full bg-black/60 hover:bg-black/80 border border-white/20 transition-all" onclick="closeModal()" aria-label="Close">
         <i data-lucide="x" class="text-white w-6 h-6"></i>
     </button>
-    <div class="h-[250px] w-full bg-cover bg-center relative" style="${background}">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
-        <div class="absolute bottom-4 left-6">
-            <h2 class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg">${item.title}</h2>
-        </div>
-    </div>
+    ${headerContent}
     <div class="p-6 md:p-10 text-gray-300 leading-relaxed space-y-6">
         <div class="flex flex-wrap gap-3 text-xs md:text-sm">
             ${item.match ? `<span class="bg-green-600 px-3 py-1 font-bold rounded text-white">${item.match}</span>` : ""}

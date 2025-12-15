@@ -32,9 +32,8 @@ function renderSkillTile(skill) {
          onmouseleave="hideHoverCard()"
          onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openModal('skill', ${skill.id}); }">
 
-        <div class="h-40 ${skill.gradient || 'bg-gray-800'} flex items-center justify-center relative overflow-hidden">
-            <div class="text-6xl drop-shadow-lg">${skill.icon}</div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="h-40 flex items-center justify-center relative overflow-hidden bg-black/20">
+            ${skill.image ? `<img src="${skill.image}" alt="${skill.title}" class="w-32 h-32 object-contain" />` : `<div class="text-6xl drop-shadow-lg">${skill.icon}</div>`}
         </div>
 
         <div class="absolute inset-0 tile-overlay opacity-0 group-hover:opacity-100 transition bg-gradient-to-t from-black/70 to-transparent flex items-end p-3"
