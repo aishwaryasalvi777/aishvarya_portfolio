@@ -1,9 +1,14 @@
-import { projectsData } from "../data/projects.js";
 import { experienceData } from "../data/experience.js";
 import { skillsData } from "../data/skills.js";
 import { educationData } from "../data/education.js";
 
+let projectsData = [];
 let recommendationsData = [];
+
+export function setProjectsData(data) {
+  projectsData = Array.isArray(data) ? data : [];
+}
+
 export function setRecommendationHoverData(data) {
   recommendationsData = Array.isArray(data) ? data : [];
 }
@@ -70,12 +75,16 @@ export function showHoverCard(event, id, type) {
 
   if (!item) return;
 
+  const hoverContext = event.currentTarget?.dataset?.hoverContext || "";
+
   hoverCardEl.innerHTML = buildHoverCardHTML(item);
   // Store the item context for click-to-open
   hoverCardEl.dataset.itemType = type;
   hoverCardEl.dataset.itemId = String(id);
+  hoverCardEl.dataset.hoverContext = hoverContext;
+  hoverCardEl.classList.toggle("hover-card-top5", hoverContext === "top5");
   const tile = event.currentTarget;
-  positionHoverCard(tile);
+  positionHoverCard(tile, hoverContext);
   hoverCardEl.style.display = "block";
   hoverCardEl.style.zIndex = "9999";
   requestAnimationFrame(() => hoverCardEl.classList.add("visible"));
@@ -113,8 +122,10 @@ export function showRecommendationHoverCard(event, id) {
   // Store context for click-to-open
   hoverCardEl.dataset.itemType = "recommendation";
   hoverCardEl.dataset.itemId = String(id);
+  hoverCardEl.dataset.hoverContext = "recommendation";
+  hoverCardEl.classList.remove("hover-card-top5");
   const tile = event.currentTarget;
-  positionHoverCard(tile);
+  positionHoverCard(tile, "recommendation");
   hoverCardEl.style.display = "block";
   requestAnimationFrame(() => hoverCardEl.classList.add("visible"));
   if (typeof lucide !== "undefined") {
@@ -133,9 +144,10 @@ export function hideHoverCard() {
   }, 180);
 }
 
-function positionHoverCard(tile) {
+function positionHoverCard(tile, hoverContext) {
   const rect = tile.getBoundingClientRect();
-  const cardWidth = 360;
+  const isTopFive = hoverContext === "top5";
+  const cardWidth = isTopFive ? 380 : 420;
   const margin = 16;
 
   let left = rect.left;

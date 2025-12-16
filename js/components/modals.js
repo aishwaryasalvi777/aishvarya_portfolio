@@ -1,8 +1,13 @@
-import { projectsData } from "../data/projects.js";
 import { experienceData } from "../data/experience.js";
 import { skillsData } from "../data/skills.js";
 import { educationData } from "../data/education.js";
+
+let projectsData = [];
 let recommendationsData = [];
+
+export function setProjectsData(data) {
+  projectsData = Array.isArray(data) ? data : [];
+}
 
 let mainModal = null;
 let modalBackdrop = null;
