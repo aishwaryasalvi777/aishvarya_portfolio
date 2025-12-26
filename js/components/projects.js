@@ -24,11 +24,11 @@ export function renderProjectsRow(projectsData) {
 
 function renderProjectTile(project) {
   // Handle empty images - show a placeholder or gradient
-  const imageContent = project.image 
-    ? `<img src="${project.image}" class="w-full h-40 object-cover" alt="${project.title} preview" onclick="openModal('project', ${project.id});" />`
-    : `<div class="w-full h-40 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" onclick="openModal('project', ${project.id});">
-         <i data-lucide="github" class="w-16 h-16 text-gray-600"></i>
-       </div>`;
+    const imageContent = project.image 
+        ? `<img src="${project.image}" class="tile-image" alt="${project.title} preview" onclick="openModal('project', ${project.id});" />`
+        : `<div class="tile-image tile-image-placeholder" onclick="openModal('project', ${project.id});">
+                 <i data-lucide="github" class="w-16 h-16 text-gray-400"></i>
+             </div>`;
   
   return `
     <div class="relative tile-hover w-[350px] flex-shrink-0 rounded-md overflow-hidden cursor-pointer group border border-white/10"

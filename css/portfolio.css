@@ -238,6 +238,13 @@ body {
     height: 384px;
 }
 
+.experience-card img {
+    width: 500px;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
 .project-card {
     position: relative;
     overflow: visible;
@@ -1406,4 +1413,27 @@ body {
 
 .education-tile-logo {
     opacity: 1.8;
+}
+
+/* =====================================================
+   PROJECT TILE IMAGE — Aspect Ratio + Hover Zoom
+===================================================== */
+.tile-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px; /* subtle rounding to match card */
+    transition: transform 200ms ease;
+}
+.tile-hover:hover .tile-image {
+    transform: scale(1.04);
+}
+
+/* Placeholder when no image is provided */
+.tile-image-placeholder {
+    background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

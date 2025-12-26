@@ -29,7 +29,7 @@ export const experienceData = [
     match: "Part-time",
     preview: "Predictive analytics. Data analysis projects.",
     gradient: "",
-    image: "assets/images/ub_logo.png",
+    image: ["assets/images/ub_campus.png", "assets/images/ub_campus2.png", "assets/images/ub_campus3.png"],
     tags: ["Predictive Analytics", "Data Analysis"],
     points: [
       "Assisted with predictive analytics and data analysis tasks for faculty research and internal projects.",
@@ -44,7 +44,7 @@ export const experienceData = [
     match: "Featured",
     preview: "95% API coverage. Advanced CI/CD pipelines.",
     gradient: "",
-    image: "assets/images/mo.png",
+    image: "assets/images/m1.png",
     tags: ["Regression", "Jenkins", "Karate"],
     points: [
       "Automated large-scale data validation and analytics workflows by developing Karate API & Selenium frameworks, boosting API regression coverage from 40% to 95% and reducing production defects by 30%.",
@@ -61,7 +61,7 @@ export const experienceData = [
     match: "Classic",
     preview: "95% validation coverage. 97% build success rate.",
     gradient: "",
-    image: "assets/images/mo.png",
+    image: "assets/images/image- software.jpg",
     tags: ["SQL", "Analytics", "Agile"],
     points: [
       "Developed SQL-based validation scripts and analytics reports to ensure data integrity across software releases, increasing coverage from 60% to 95% and reducing escaped defects by 40%.",

@@ -10,7 +10,7 @@ export const educationData = [
     startYear: "Aug 2024",
     endYear: "Dec 2025",
     year: "2024-2025",
-    image: "assets/images/ub_bull.png",
+    image: ["assets/images/ub_bull.png", "assets/images/ub_campus4.png", "assets/images/ub_campus5.png"],
     tags: ["Machine Learning", "Data Science", "Big Data"],
     desc: "Master of Science in Data Science with focus on machine learning and data intensive computing.",
     points: [

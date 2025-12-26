@@ -49,14 +49,79 @@ function transformRepo(repo, index) {
   if (repo.language) points.push(`Built with ${repo.language}`);
   if (repo.stargazers_count > 0) points.push(`${repo.stargazers_count} stars`);
   
-  // Build links
+  // Build links (override homepage for Power BI dashboards)
+  const nameLower = (repo.name || '').toLowerCase();
+  const homepageOverride = (nameLower.includes('powerbi') || nameLower.includes('power-bi') || nameLower.includes('power_bi'))
+    ? 'https://bidashboards.netlify.app'
+    : '';
+  const liveDemo = homepageOverride || repo.homepage || '';
+
   const links = [{ label: 'View Code', url: repo.html_url }];
-  if (repo.homepage) links.push({ label: 'Live Demo', url: repo.homepage });
+  if (liveDemo) links.push({ label: 'Live Demo', url: liveDemo });
   
   // Check if recent (within 6 months)
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
   const badge = new Date(repo.updated_at) > sixMonthsAgo ? 'NEW' : undefined;
+  
+  // Assign portfolio and powerbi images to specific repos
+  let projectImage = '';
+  if (repo.name.toLowerCase() === 'aishvarya_portfolio') {
+    projectImage = 'assets/images/portfolio.png';
+  } else if (nameLower === 'portfolio') {
+    projectImage = 'assets/images/portfolio_old.png';
+  } else if (nameLower.includes('powerbi') || nameLower.includes('power-bi') || nameLower.includes('power_bi')) {
+    projectImage = 'assets/images/powerbi_d.jpg';
+  } else if (nameLower.includes('real_time') || nameLower.includes('real-time') || nameLower.includes('analytics')) {
+    projectImage = 'assets/images/real_time_analytics.png';
+  } else if (nameLower.includes('ecommerce') || nameLower.includes('product-recommendation')) {
+    projectImage = 'assets/images/recommendation.jpg';
+  } else if (nameLower.includes('ml_heart') || nameLower.includes('heart_attack') || nameLower.includes('heart-attack')) {
+    projectImage = 'assets/images/heart.jpg';
+  } else if (nameLower === 'forcasting-recommendation-engine') {
+    projectImage = 'assets/images/forecast.jpg';
+  } else if (
+    // EV Charging project detection
+    nameLower.includes('ev_charging') ||
+    nameLower.includes('ev-charging') ||
+    nameLower.includes('evcharging') ||
+    (nameLower.includes('ev') && nameLower.includes('charging')) ||
+    desc.includes('ev charging') ||
+    topics.includes('ev') ||
+    topics.includes('electric-vehicle')
+  ) {
+    projectImage = 'assets/images/ev_charging.png';
+  } else if (
+    // DIC LinkedIn Job Market Insights detection
+    nameLower === 'dic_linkedin_job_market_insights' ||
+    (nameLower.includes('linkedin') && nameLower.includes('job') && nameLower.includes('market') && (nameLower.includes('insight') || nameLower.includes('insights')))
+  ) {
+    projectImage = 'assets/images/job_market.png';
+  } else if (
+    // Fleet Management detection
+    nameLower === 'fleet_management' ||
+    nameLower === 'fleet-management' ||
+    nameLower.includes('fleet') && nameLower.includes('management')
+  ) {
+    projectImage = 'assets/images/fleet1.png';
+  } else if (
+    // Short-term temperature forecasting (ARIMA/LSTM) detection
+    nameLower.includes('temperature') && nameLower.includes('forecast') && (nameLower.includes('arima') || nameLower.includes('lstm'))
+  ) {
+    projectImage = 'assets/images/weather_forecast.png';
+  } else if (
+    // Foodborne Illness Time Series Forecasting detection
+    nameLower.includes('foodborne') && (nameLower.includes('illness') || nameLower.includes('disease')) && nameLower.includes('forecast')
+  ) {
+    projectImage = 'assets/images/foodborne_illness.png';
+  } else if (
+    // Machine Learning repo detection
+    nameLower === 'machine_learning' ||
+    nameLower === 'machine-learning' ||
+    (nameLower.includes('machine') && nameLower.includes('learning'))
+  ) {
+    projectImage = 'assets/images/ml.png';
+  }
   
   return {
     id: index + 1,
@@ -68,7 +133,7 @@ function transformRepo(repo, index) {
     badge,
     preview,
     gradient: '',
-    image: '', // No image for now
+    image: projectImage,
     tags: tags.slice(0, 3),
     points: points.slice(0, 3),
     links
