@@ -1,5 +1,6 @@
 export function renderProjectsRow(projectsData) {
   const section = document.createElement("div");
+  section.id = "projects";
   section.classList.add("animate-row", "carousel-container");
   section.innerHTML = `
         <h2 class="text-white text-xl md:text-2xl font-bold mb-3 mt-10">Projects</h2>

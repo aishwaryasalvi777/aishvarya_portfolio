@@ -27,10 +27,29 @@
                 DATA ANALYST
             </div>
             <div class="hidden md:flex gap-6 text-sm font-medium text-gray-300">
-                <a href="#home" class="hover:text-white transition-colors">Home</a>
-                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
-                <a href="#experience" class="hover:text-white transition-colors">Experience</a>
-                <a href="#skills" class="hover:text-white transition-colors">My List</a>
+                <a href="#home" class="hover:text-white transition-colors scroll-smooth">Home</a>
+                <a href="#projects" class="hover:text-white transition-colors scroll-smooth">Projects</a>
+                <a href="#experience" class="hover:text-white transition-colors scroll-smooth">Experience</a>
+                <div class="relative group">
+                    <button id="my-list-trigger" class="hover:text-white transition-colors flex items-center gap-1">
+                        My List
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="my-list-dropdown" id="my-list-dropdown">
+                        <a href="#education" class="dropdown-item">
+                            <i data-lucide="book-open"></i>
+                            <span>Education</span>
+                        </a>
+                        <a href="#skills" class="dropdown-item">
+                            <i data-lucide="star"></i>
+                            <span>Skills</span>
+                        </a>
+                        <a href="#recommendations" class="dropdown-item">
+                            <i data-lucide="message-circle"></i>
+                            <span>Recommendations</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -48,11 +67,27 @@
 
         <div class="flex items-center gap-6 text-gray-200">
             <i data-lucide="bell" class="w-6 h-6 cursor-pointer hover:text-white"></i>
-            <div class="flex items-center gap-1 cursor-pointer group">
-                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center font-bold text-xs">
-                    AS
+            <div class="relative">
+                <div class="flex items-center gap-1 cursor-pointer group" id="profile-trigger">
+                    <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center font-bold text-xs">
+                        AS
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 group-hover:rotate-90 transition-transform"></i>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="assets/resume.pdf" target="_blank">
+                        <i data-lucide="file-text"></i>
+                        <span>Resume</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/aishvaryasalvi/" target="_blank">
+                        <i data-lucide="linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="#" onclick="openAboutModal(); return false;">
+                        <i data-lucide="user"></i>
+                        <span>About Me</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -86,9 +121,9 @@
 
             <div class="flex flex-wrap items-center gap-3 text-green-400 font-bold text-xs md:text-base">
                 <span>98% Match</span>
-                <span class="text-gray-400">2025</span>
-                <span class="border border-gray-500 px-1 text-gray-400">Grad Student</span>
-                <span class="text-gray-300">3 Years Experience</span>
+                <!-- <span class="text-gray-400">intern at New era cap</span> -->
+                <!-- <span class="border border-gray-500 px-1 text-gray-400">Grad Student</span> -->
+                <span class="text-gray-300">3 Years Experienced Professional</span>
             </div>
 
             <p class="text-gray-300 text-sm md:text-lg drop-shadow-md max-w-xl">
@@ -108,6 +143,36 @@
 
     <!-- ROWS CONTAINER -->
     <div id="rows-container" class="relative z-10 -mt-24 pb-20 space-y-10 md:space-y-12 pl-4 md:pl-12"></div>
+
+        <!-- CONTACT SECTION: Netflix-style Signup -->
+        <section id="contact" class="contact-section signup-contact-section">
+            <div class="contact-background"></div>
+            <div class="signup-contact-content">
+                <div class="signup-contact-header">
+                    <h2 class="signup-contact-headline">Let’s start a conversation</h2>
+                    <p class="signup-contact-support">Interested in collaborating, hiring, or learning more about my work?</p>
+                </div>
+                <form id="signup-contact-form" class="signup-contact-form" autocomplete="off" novalidate>
+                    <div class="signup-contact-fields">
+                        <div class="signup-contact-field">
+                            <label for="signup-name">Name</label>
+                            <input type="text" id="signup-name" name="name" autocomplete="name" maxlength="60" required />
+                        </div>
+                        <div class="signup-contact-field">
+                            <label for="signup-email">Email <span aria-hidden="true" style="color:#ef4444">*</span></label>
+                            <input type="email" id="signup-email" name="email" autocomplete="email" maxlength="80" required />
+                        </div>
+                        <div class="signup-contact-field">
+                            <label for="signup-message">Message</label>
+                            <textarea id="signup-message" name="message" rows="3" maxlength="600"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="signup-contact-submit" id="signup-contact-submit">Start conversation</button>
+                    <div class="signup-contact-helper">I typically respond within 24–48 hours.</div>
+                    <div class="signup-contact-status" id="signup-contact-status" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
 
     <!-- FOOTER -->
     <footer class="pt-10 md:pt-20 pr-4 md:pr-12 text-center text-gray-500 text-xs md:text-sm pb-10">
@@ -184,7 +249,7 @@
             <!-- Header with image and intro -->
             <div class="about-modal-header">
                 <div class="about-modal-image">
-                    <img src="assets/images/portfolio.png" alt="Aishvarya Salvi" />
+                    <img src="assets/images/dp.jpeg" alt="Aishvarya Salvi" />
                 </div>
                 <div class="about-modal-intro">
                     <h2 class="about-modal-title">Aishvarya Salvi</h2>

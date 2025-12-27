@@ -35,9 +35,68 @@ function renderRows(projects, recommendationsData) {
   container.appendChild(renderTopFiveProjectsRow(projects));
   if (recommendationsData && recommendationsData.length) {
     container.appendChild(renderRecommendationsRow(recommendationsData));
+  // ================================
+  // NETFLIX-STYLE SIGNUP CONTACT FORM LOGIC
+  // ================================
+  function initSignupContactForm() {
+    const form = document.getElementById('signup-contact-form');
+    if (!form) return;
+    const emailInput = form.querySelector('#signup-email');
+    const nameInput = form.querySelector('#signup-name');
+    const messageInput = form.querySelector('#signup-message');
+    const submitBtn = form.querySelector('#signup-contact-submit');
+    const statusEl = form.querySelector('#signup-contact-status');
+
+    // Emphasize CTA when user types
+    [emailInput, nameInput, messageInput].forEach(input => {
+      if (!input) return;
+      input.addEventListener('input', () => {
+        if (
+          (emailInput && emailInput.value.trim()) ||
+          (nameInput && nameInput.value.trim()) ||
+          (messageInput && messageInput.value.trim())
+        ) {
+          submitBtn.classList.add('active');
+        } else {
+          submitBtn.classList.remove('active');
+        }
+        if (statusEl) {
+          statusEl.textContent = '';
+          statusEl.classList.remove('success');
+        }
+        emailInput.classList.remove('input-error');
+      });
+    });
+
+    // Simple validation and submit
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      if (!emailInput.value.trim() || !/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) {
+        emailInput.classList.add('input-error');
+        if (statusEl) {
+          statusEl.textContent = 'Please enter a valid email.';
+          statusEl.classList.remove('success');
+        }
+        emailInput.focus();
+        valid = false;
+      }
+      if (!valid) return;
+      // Simulate success
+      if (statusEl) {
+        statusEl.textContent = 'Thanks! I’ll respond within 24–48 hours.';
+        statusEl.classList.add('success');
+      }
+      form.reset();
+      submitBtn.classList.remove('active');
+    });
+  }
+
+  // ...existing code...
   }
   
   // Initialize carousels after rows are rendered
+    initSignupContactForm();
   setTimeout(() => {
     initAllCarousels();
     initAllCarouselRows();
@@ -58,17 +117,107 @@ function openModalById(id) {
 }
 
 function initNavbarScroll() {
+  const navbar = document.getElementById("navbar");
+  const navLinks = navbar.querySelectorAll('a[href^="#"]');
+  const sections = Array.from(navLinks).map(link => {
+    const id = link.getAttribute('href').substring(1);
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  // Scroll-aware navbar behavior
   window.addEventListener("scroll", () => {
-    const navbar = document.getElementById("navbar");
     if (!navbar) return;
+    
+    // Add scrolled class for visual changes
     if (window.scrollY > 20) {
-      navbar.classList.add("bg-[#141414]");
-      navbar.classList.remove("bg-gradient-to-b");
+      navbar.classList.add("scrolled");
     } else {
-      navbar.classList.remove("bg-[#141414]");
-      navbar.classList.add("bg-gradient-to-b");
+      navbar.classList.remove("scrolled");
     }
+
+    // Update active nav link based on scroll position
+    let currentSection = '';
+    const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+    sections.forEach(section => {
+      if (section) {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = section.id;
+        }
+      }
+    });
+
+    // Update active states
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      const linkHref = link.getAttribute('href').substring(1);
+      if (linkHref === currentSection) {
+        link.classList.add('active');
+      }
+    });
   });
+
+  // Profile dropdown toggle
+  const profileTrigger = document.getElementById('profile-trigger');
+  const profileDropdown = document.getElementById('profile-dropdown');
+  
+  if (profileTrigger && profileDropdown) {
+    profileTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!profileTrigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove('show');
+      }
+    });
+
+    // Close dropdown when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && profileDropdown.classList.contains('show')) {
+        profileDropdown.classList.remove('show');
+      }
+    });
+  }
+
+  // My List dropdown toggle
+  const myListTrigger = document.getElementById('my-list-trigger');
+  const myListDropdown = document.getElementById('my-list-dropdown');
+  
+  if (myListTrigger && myListDropdown) {
+    myListTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      myListDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking a link
+    const dropdownLinks = myListDropdown.querySelectorAll('a');
+    dropdownLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        myListDropdown.classList.remove('show');
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!myListTrigger.contains(e.target) && !myListDropdown.contains(e.target)) {
+        myListDropdown.classList.remove('show');
+      }
+    });
+
+    // Close dropdown when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && myListDropdown.classList.contains('show')) {
+        myListDropdown.classList.remove('show');
+      }
+    });
+  }
 }
 function initAboutModalStub() {
   // About modal is now handled by aboutModal.js component

@@ -133,6 +133,9 @@ export function openRecommendationModal(id) {
     lucide.createIcons();
   }
   
+  // Add scroll listener to pause text animations
+  setupScrollPauseListener(modalContent);
+  
   // Trigger staggered animations
   setTimeout(() => {
     animateRecommendationModal();
@@ -206,8 +209,54 @@ export function closeRecommendationModal() {
   ensureModalElements();
   if (recommendationModal) {
     recommendationModal.classList.remove("visible");
+    // Clean up scroll listener
+    const modalContent = recommendationModal.querySelector(".recommendation-modal-content");
+    if (modalContent) {
+      removeScrollPauseListener(modalContent);
+    }
   }
   document.body.style.overflow = "auto";
+}
+
+/**
+ * Netflix-like micro polish: Pause text animation when user scrolls
+ */
+let scrollTimeout;
+function handleModalScroll(modalContent) {
+  const textLines = modalContent.querySelectorAll(".recommendation-modal-text .text-line.animate");
+  
+  // Pause animations
+  textLines.forEach(line => {
+    line.classList.add("paused");
+  });
+  
+  // Clear previous timeout
+  clearTimeout(scrollTimeout);
+  
+  // Resume animations after user stops scrolling for 500ms
+  scrollTimeout = setTimeout(() => {
+    textLines.forEach(line => {
+      line.classList.remove("paused");
+    });
+  }, 500);
+}
+
+function setupScrollPauseListener(modalContent) {
+  if (!modalContent) return;
+  
+  // Bind the handler to the modal content element
+  const boundHandler = () => handleModalScroll(modalContent);
+  modalContent._scrollHandler = boundHandler;
+  
+  modalContent.addEventListener("scroll", boundHandler, { passive: true });
+}
+
+function removeScrollPauseListener(modalContent) {
+  if (!modalContent || !modalContent._scrollHandler) return;
+  
+  modalContent.removeEventListener("scroll", modalContent._scrollHandler);
+  delete modalContent._scrollHandler;
+  clearTimeout(scrollTimeout);
 }
 
 function buildRecommendationModalHTML(rec) {
@@ -221,20 +270,35 @@ function buildRecommendationModalHTML(rec) {
     `<span class="text-line" data-index="${idx}">${line.trim()}${idx < lines.length - 1 ? " " : ""}</span>`
   ).join("");
   
+  // Extract first 1-2 sentences as featured quote
+  const featuredQuote = lines.slice(0, Math.min(2, lines.length)).join(" ");
+  const remainingText = lines.slice(Math.min(2, lines.length)).map((line, idx) => 
+    `<span class="text-line" data-index="${idx + 2}">${line.trim()}${idx < lines.length - 3 ? " " : ""}</span>`
+  ).join("");
+  
   return `
+        <div class="recommendation-modal-label">RECOMMENDATION</div>
         <div class="recommendation-modal-header">
-            <div class="recommendation-modal-avatar" style="background-image:url('${rec.image}')"></div>
+            <div class="recommendation-modal-avatar-wrapper">
+                <div class="recommendation-modal-avatar" style="background-image:url('${rec.image}')"></div>
+            </div>
             <div class="recommendation-modal-info">
                 <p class="recommendation-modal-name">${rec.reviewer}</p>
                 <p class="recommendation-modal-role">${rec.role}</p>
                 <p class="recommendation-modal-company">${rec.company}</p>
-                <p class="recommendation-modal-year">Year: ${rec.year}</p>
-                <p class="recommendation-modal-rating">${stars}</p>
+                <p class="recommendation-modal-year">${rec.year}</p>
+                <div class="recommendation-modal-rating-wrapper">
+                    <p class="recommendation-modal-rating">${stars}</p>
+                    <span class="recommendation-modal-verified">Verified LinkedIn Recommendation</span>
+                </div>
             </div>
         </div>
-        <p class="recommendation-modal-text">"${animatedReview}"</p>
+        ${featuredQuote ? `<div class="recommendation-modal-featured-quote">"${featuredQuote}"</div>` : ''}
+        <div class="recommendation-modal-text-wrapper">
+            <p class="recommendation-modal-text">"${animatedReview}"</p>
+        </div>
         <div class="recommendation-modal-actions">
-            <a href="${rec.linkedinUrl}" target="_blank" class="recommendation-linkedin-btn"><i data-lucide="linkedin"></i> View on LinkedIn</a>
+            <a href="https://www.linkedin.com/in/aishvaryasalvi/details/recommendations/?detailScreenTabIndex=0" target="_blank" class="recommendation-linkedin-btn"><i data-lucide="linkedin"></i> View on LinkedIn</a>
             <button class="recommendation-close-btn" onclick="closeRecommendationModal()">Close</button>
         </div>
     `;

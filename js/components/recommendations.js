@@ -1,5 +1,6 @@
 export function renderRecommendationsRow(recommendationsData) {
   const section = document.createElement("div");
+  section.id = "recommendations";
   section.classList.add("animate-row", "mt-10", "carousel-container");
   section.innerHTML = `
         <h2 class="text-white text-xl md:text-2xl font-bold mb-5">Recommendations</h2>

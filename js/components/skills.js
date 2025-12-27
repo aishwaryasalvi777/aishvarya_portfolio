@@ -1,5 +1,6 @@
 export function renderSkillsHeatmap(skillsData) {
   const section = document.createElement("div");
+  section.id = "skills";
     section.classList.add("animate-row", "carousel-container");
 
   section.innerHTML = `
