@@ -40,10 +40,10 @@ function renderEducationTile(edu) {
   return `
     <div class="relative tile-hover w-[350px] flex-shrink-0 rounded-md overflow-hidden cursor-pointer group border border-white/10"
          role="button" tabindex="0"
-         onclick="openModal('education', ${edu.id})"
+         onclick="openEducationDetailById(${edu.id})"
          onmouseenter="showHoverCard(event, ${edu.id}, 'education')"
          onmouseleave="hideHoverCard()"
-         onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openModal('education', ${edu.id}); }"
+         onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openEducationDetailById(${edu.id}); }"
          id="edu-tile-${edu.id}">
 
       ${hasMultipleImages ? `
@@ -72,7 +72,7 @@ function renderEducationTile(edu) {
       `}
 
       <div class="absolute inset-0 tile-overlay opacity-0 group-hover:opacity-100 transition bg-gradient-to-t from-black/80 to-transparent flex items-end p-3"
-           onclick="openModal('education', ${edu.id});">
+           onclick="openEducationDetailById(${edu.id});">
         <button class="bg-white text-black px-4 py-2 rounded font-bold text-sm shadow hover:bg-white/90"
                 onclick="openModal('education', ${edu.id}); event.stopPropagation();">
           <i data-lucide="arrow-right" class="w-4 h-4"></i> Learn More

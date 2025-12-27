@@ -133,6 +133,135 @@
     <!-- Hover Card -->
     <div id="hover-card" class="hover-card" style="display:none;"></div>
 
+    <!-- PROJECT DETAIL MODAL (Netflix-style fullscreen) -->
+    <div id="project-detail-modal" class="project-modal-overlay hidden" aria-hidden="true">
+        <div class="project-modal-backdrop"></div>
+        <div class="project-modal-container">
+            <button class="project-modal-close" onclick="closeProjectDetailModal()" aria-label="Close project details">
+                <i data-lucide="x"></i>
+            </button>
+            <div id="project-detail-modal-header"></div>
+            <div id="project-detail-modal-content" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE DETAIL MODAL (Netflix-style fullscreen) -->
+    <div id="experience-detail-modal" class="experience-modal-overlay hidden" aria-hidden="true">
+        <div class="experience-modal-backdrop"></div>
+        <div class="experience-modal-container">
+            <button class="experience-modal-close" onclick="closeExperienceDetailModal()" aria-label="Close experience details">
+                <i data-lucide="x"></i>
+            </button>
+            <div id="experience-detail-modal-header"></div>
+            <div id="experience-detail-modal-content" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- EDUCATION DETAIL MODAL (Netflix-style fullscreen) -->
+    <div id="education-detail-modal" class="education-modal-overlay hidden" aria-hidden="true">
+        <div class="education-modal-backdrop"></div>
+        <div class="education-modal-container">
+            <button class="education-modal-close" onclick="closeEducationDetailModal()" aria-label="Close education details">
+                <i data-lucide="x"></i>
+            </button>
+            <div id="education-detail-modal-header"></div>
+            <div id="education-detail-modal-content" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- ABOUT MODAL (Netflix-style fullscreen) -->
+    <div id="about-modal" class="about-modal-overlay hidden">
+        <!-- Dim backdrop -->
+        <div class="about-modal-backdrop"></div>
+        
+        <!-- Modal container -->
+        <div class="about-modal-container">
+            <!-- Close button -->
+            <button class="about-modal-close" onclick="closeAboutModal()" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
+
+            <!-- Header with image and intro -->
+            <div class="about-modal-header">
+                <div class="about-modal-image">
+                    <img src="assets/images/portfolio.png" alt="Aishvarya Salvi" />
+                </div>
+                <div class="about-modal-intro">
+                    <h2 class="about-modal-title">Aishvarya Salvi</h2>
+                    <p class="about-modal-subtitle">Data Scientist | ML Engineer | Analytics Expert</p>
+                    <div class="about-modal-badges">
+                        <span class="badge">3+ Years Experience</span>
+                        <span class="badge">Master's in Data Science</span>
+                        <span class="badge">GCP Certified</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable content -->
+            <div class="about-modal-content">
+                <section class="about-section">
+                    <h3 class="about-section-title">About Me</h3>
+                    <p>I'm a data-driven professional with over 3 years of hands-on experience building machine learning pipelines, real-time data systems, and analytical solutions that drive business impact. Currently pursuing a Master's in Data Science at the University at Buffalo while working as a Data Analyst at New Era Cap, where I've transformed 15+ years of historical sales data into actionable insights that shape long-range forecasting and supply-chain strategy.</p>
+                    <p>Throughout my career at Mediaocean and now at New Era Cap, I've developed a deep expertise in bridging the gap between data engineering and business intelligence. I've engineered scalable systems—from ALS-based recommendation engines processing 2.7M+ events to real-time streaming pipelines handling 10K+ events per minute—and created interactive dashboards that empower stakeholders to explore trends and make data-driven decisions.</p>
+                </section>
+
+                <section class="about-section">
+                    <h3 class="about-section-title">What Excites Me</h3>
+                    <p>Solving complex problems with data: designing robust ML pipelines, optimizing performance metrics (like the 30% reduction in production defects I achieved through analytical insights), and translating raw data into compelling visualizations. I'm comfortable across the full stack—Python, SQL, Spark, Kafka, GCP, Docker—and passionate about building production-ready systems that scale.</p>
+                </section>
+
+                <section class="about-section">
+                    <h3 class="about-section-title">Technical Skills</h3>
+                    <div class="about-skills-grid">
+                        <div class="skill-category">
+                            <h4>Languages</h4>
+                            <p>Python, SQL, R, Java, C/C++</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Data & ML</h4>
+                            <p>Pandas, NumPy, Scikit-learn, TensorFlow, Spark, Kafka</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Cloud & MLOps</h4>
+                            <p>GCP, AWS, Azure, Docker, Kubernetes, CI/CD</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Visualization</h4>
+                            <p>Power BI, Tableau, Streamlit, Matplotlib, Seaborn</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <h3 class="about-section-title">Experience Highlights</h3>
+                    <ul class="about-highlights">
+                        <li>Analyzed 15+ years of sales data to identify seasonality and regional patterns</li>
+                        <li>Built real-time streaming pipelines processing 10K+ events/minute</li>
+                        <li>Engineered ALS recommendation engine handling 2.7M+ events</li>
+                        <li>Decreased production defects by 30% through analytical insights</li>
+                        <li>Developed interactive Streamlit dashboards for supply-chain optimization</li>
+                        <li>Managed 7+ ML experiments with MLflow for heart attack risk prediction</li>
+                    </ul>
+                </section>
+
+                <section class="about-section">
+                    <h3 class="about-section-title">Let's Connect</h3>
+                    <div class="about-modal-links">
+                        <a href="https://linkedin.com/in/aishvaryasalvi" target="_blank" class="about-link-btn primary">
+                            <i data-lucide="linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/aishwaryasalvi777" target="_blank" class="about-link-btn secondary">
+                            <i data-lucide="github"></i> GitHub
+                        </a>
+                        <a href="mailto:aishwarya.salvi28@gmail.com" class="about-link-btn secondary">
+                            <i data-lucide="mail"></i> Email
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
     <!-- App Entry (ES Modules) -->
     <script type="module" src="js/main.js"></script>
 </body>

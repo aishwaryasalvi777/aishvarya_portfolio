@@ -13,6 +13,10 @@ import { renderRecommendationsRow } from "./components/recommendations.js";
 
 import { showHoverCard, hideHoverCard, showRecommendationHoverCard, setRecommendationHoverData, setProjectsData as setHoverProjectsData } from "./components/hoverCard.js";
 import { openModal, closeModal, initModalBackdrop, openRecommendationModal, closeRecommendationModal, setRecommendationsData, setProjectsData as setModalProjectsData } from "./components/modals.js";
+import { initAboutModal, openAboutModal, closeAboutModal } from "./components/aboutModal.js";
+import { initProjectDetailModal, openProjectDetailById, closeProjectDetailModal, setProjectDetailData } from "./components/projectDetailModal.js";
+import { initExperienceDetailModal, openExperienceDetailById, closeExperienceDetailModal, setExperienceDetailData } from "./components/experienceDetailModal.js";
+import { initEducationDetailModal, openEducationDetailById, closeEducationDetailModal, setEducationDetailData } from "./components/educationDetailModal.js";
 import { handleSearch, clearSearch } from "./components/search.js";
 import { enableTileAccessibility } from "./components/accessibility.js";
 import { initAllCarousels } from "./utils/carousel.js";
@@ -66,13 +70,19 @@ function initNavbarScroll() {
     }
   });
 }
-
 function initAboutModalStub() {
-  // Minimal placeholder to avoid missing handler; customize as needed.
-  window.openAboutModal = () => alert("More info coming soon.");
+  // About modal is now handled by aboutModal.js component
+  window.openAboutModal = openAboutModal;
+  window.closeAboutModal = closeAboutModal;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // Initialize modal components
+  initAboutModal();
+  initProjectDetailModal();
+  initExperienceDetailModal();
+  initEducationDetailModal();
+  
   // Load projects from GitHub
   let projects = [];
   try {
@@ -87,9 +97,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   loadedProjects = projects;
 
-  // Set projects data for hover cards and modals
+  // Set projects and experience data for detail modals
   setHoverProjectsData(projects);
   setModalProjectsData(projects);
+  setProjectDetailData(projects);
+  setExperienceDetailData(experienceData);
+  setEducationDetailData(educationData);
 
   // Load recommendations
   let recommendations = [];
@@ -122,5 +135,11 @@ window.hideHoverCard = hideHoverCard;
 window.showRecommendationHoverCard = showRecommendationHoverCard;
 window.openRecommendationModal = openRecommendationModal;
 window.closeRecommendationModal = closeRecommendationModal;
+window.openProjectDetailById = openProjectDetailById;
+window.closeProjectDetailModal = closeProjectDetailModal;
+window.openExperienceDetailById = openExperienceDetailById;
+window.closeExperienceDetailModal = closeExperienceDetailModal;
+window.openEducationDetailById = openEducationDetailById;
+window.closeEducationDetailModal = closeEducationDetailModal;
 
 export { renderRows };

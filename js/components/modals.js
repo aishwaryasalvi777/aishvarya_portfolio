@@ -1,6 +1,9 @@
 import { experienceData } from "../data/experience.js";
 import { skillsData } from "../data/skills.js";
 import { educationData } from "../data/education.js";
+import { openProjectDetailById } from "./projectDetailModal.js";
+import { openExperienceDetailById } from "./experienceDetailModal.js";
+import { openEducationDetailById } from "./educationDetailModal.js";
 
 let projectsData = [];
 let recommendationsData = [];
@@ -25,11 +28,21 @@ function ensureModalElements() {
 export function openModal(type, id) {
   console.log('openModal called with:', type, id);
   ensureModalElements();
+  // Route project and experience modals to the new fullscreen modals
+  if (type === "project") {
+    openProjectDetailById(id);
+    return;
+  }
+  if (type === "experience") {
+    openExperienceDetailById(id);
+    return;
+  }
+  if (type === "education") {
+    openEducationDetailById(id);
+    return;
+  }
   let item = null;
-  if (type === "project") item = projectsData.find(x => x.id === id);
-  if (type === "experience") item = experienceData.find(x => x.id === id);
   if (type === "skill") item = skillsData.find(x => x.id === id);
-  if (type === "education") item = educationData.find(x => x.id === id);
   console.log('Found item:', item);
   if (!item) return;
 
@@ -119,6 +132,74 @@ export function openRecommendationModal(id) {
   if (typeof lucide !== "undefined") {
     lucide.createIcons();
   }
+  
+  // Trigger staggered animations
+  setTimeout(() => {
+    animateRecommendationModal();
+  }, 50);
+}
+
+/**
+ * Orchestrates staggered reveal animation sequence for recommendation modal
+ * Sequence: Avatar → Name/Role/Year → Stars (one-by-one) → Text lines → Buttons
+ */
+function animateRecommendationModal() {
+  if (!recommendationModal || !recommendationModal.classList.contains("visible")) return;
+  
+  const content = recommendationModal.querySelector(".recommendation-modal-content");
+  if (!content) return;
+  
+  // Check if prefers-reduced-motion is set
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  
+  if (prefersReducedMotion) {
+    // Skip animations, just make everything visible
+    content.querySelectorAll(".recommendation-modal-avatar, .recommendation-modal-name, .recommendation-modal-role, .recommendation-modal-company, .recommendation-modal-year, .recommendation-modal-rating .star, .recommendation-modal-text .text-line, .recommendation-modal-actions").forEach(el => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+    return;
+  }
+  
+  // 1. Avatar fades in + scales (0ms)
+  const avatar = content.querySelector(".recommendation-modal-avatar");
+  if (avatar) avatar.classList.add("animate");
+  
+  // 2. Name slides up + fades (100ms delay)
+  const name = content.querySelector(".recommendation-modal-name");
+  if (name) name.classList.add("animate");
+  
+  // 3. Role, Company, Year (150ms, 200ms, 250ms delays)
+  const role = content.querySelector(".recommendation-modal-role");
+  const company = content.querySelector(".recommendation-modal-company");
+  const year = content.querySelector(".recommendation-modal-year");
+  if (role) role.classList.add("animate");
+  if (company) company.classList.add("animate");
+  if (year) year.classList.add("animate");
+  
+  // 4. Stars fade in one-by-one (300ms+ delays)
+  const stars = content.querySelectorAll(".recommendation-modal-rating .star");
+  stars.forEach((star, idx) => {
+    setTimeout(() => {
+      star.classList.add("animate");
+    }, 300 + idx * 80);
+  });
+  
+  // 5. Text lines appear sequentially (500ms+ delays)
+  const textLines = content.querySelectorAll(".recommendation-modal-text .text-line");
+  textLines.forEach((line, idx) => {
+    setTimeout(() => {
+      line.classList.add("animate");
+    }, 500 + idx * 100);
+  });
+  
+  // 6. Buttons appear last (600ms delay for actions container)
+  const actions = content.querySelector(".recommendation-modal-actions");
+  if (actions) {
+    setTimeout(() => {
+      actions.classList.add("animate");
+    }, 600);
+  }
 }
 
 export function closeRecommendationModal() {
@@ -130,7 +211,16 @@ export function closeRecommendationModal() {
 }
 
 function buildRecommendationModalHTML(rec) {
-  const stars = Array(rec.rating).fill("★").join("");
+  // Create star elements with data-index for staggered animation
+  const stars = Array(rec.rating).fill("★").map((s, i) => `<span class="star" data-index="${i}">${s}</span>`).join("");
+  
+  // Split review text into sentences for line-by-line animation
+  const reviewText = rec.fullReview.replace(/([.!?]+)\s+/g, "$1|||");
+  const lines = reviewText.split("|||").filter(l => l.trim());
+  const animatedReview = lines.map((line, idx) => 
+    `<span class="text-line" data-index="${idx}">${line.trim()}${idx < lines.length - 1 ? " " : ""}</span>`
+  ).join("");
+  
   return `
         <div class="recommendation-modal-header">
             <div class="recommendation-modal-avatar" style="background-image:url('${rec.image}')"></div>
@@ -142,7 +232,7 @@ function buildRecommendationModalHTML(rec) {
                 <p class="recommendation-modal-rating">${stars}</p>
             </div>
         </div>
-        <p class="recommendation-modal-text">"${rec.fullReview}"</p>
+        <p class="recommendation-modal-text">"${animatedReview}"</p>
         <div class="recommendation-modal-actions">
             <a href="${rec.linkedinUrl}" target="_blank" class="recommendation-linkedin-btn"><i data-lucide="linkedin"></i> View on LinkedIn</a>
             <button class="recommendation-close-btn" onclick="closeRecommendationModal()">Close</button>
