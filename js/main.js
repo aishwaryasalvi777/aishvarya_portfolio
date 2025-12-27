@@ -35,68 +35,9 @@ function renderRows(projects, recommendationsData) {
   container.appendChild(renderTopFiveProjectsRow(projects));
   if (recommendationsData && recommendationsData.length) {
     container.appendChild(renderRecommendationsRow(recommendationsData));
-  // ================================
-  // NETFLIX-STYLE SIGNUP CONTACT FORM LOGIC
-  // ================================
-  function initSignupContactForm() {
-    const form = document.getElementById('signup-contact-form');
-    if (!form) return;
-    const emailInput = form.querySelector('#signup-email');
-    const nameInput = form.querySelector('#signup-name');
-    const messageInput = form.querySelector('#signup-message');
-    const submitBtn = form.querySelector('#signup-contact-submit');
-    const statusEl = form.querySelector('#signup-contact-status');
-
-    // Emphasize CTA when user types
-    [emailInput, nameInput, messageInput].forEach(input => {
-      if (!input) return;
-      input.addEventListener('input', () => {
-        if (
-          (emailInput && emailInput.value.trim()) ||
-          (nameInput && nameInput.value.trim()) ||
-          (messageInput && messageInput.value.trim())
-        ) {
-          submitBtn.classList.add('active');
-        } else {
-          submitBtn.classList.remove('active');
-        }
-        if (statusEl) {
-          statusEl.textContent = '';
-          statusEl.classList.remove('success');
-        }
-        emailInput.classList.remove('input-error');
-      });
-    });
-
-    // Simple validation and submit
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let valid = true;
-      if (!emailInput.value.trim() || !/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) {
-        emailInput.classList.add('input-error');
-        if (statusEl) {
-          statusEl.textContent = 'Please enter a valid email.';
-          statusEl.classList.remove('success');
-        }
-        emailInput.focus();
-        valid = false;
-      }
-      if (!valid) return;
-      // Simulate success
-      if (statusEl) {
-        statusEl.textContent = 'Thanks! I’ll respond within 24–48 hours.';
-        statusEl.classList.add('success');
-      }
-      form.reset();
-      submitBtn.classList.remove('active');
-    });
   }
-
-  // ...existing code...
-  }
-  
   // Initialize carousels after rows are rendered
-    initSignupContactForm();
+  initSignupContactForm();
   setTimeout(() => {
     initAllCarousels();
     initAllCarouselRows();
@@ -104,6 +45,61 @@ function renderRows(projects, recommendationsData) {
       lucide.createIcons();
     }
   }, 100);
+}
+
+// Move initSignupContactForm to top-level
+function initSignupContactForm() {
+  const form = document.getElementById('signup-contact-form');
+  if (!form) return;
+  const emailInput = form.querySelector('#signup-email');
+  const nameInput = form.querySelector('#signup-name');
+  const messageInput = form.querySelector('#signup-message');
+  const submitBtn = form.querySelector('#signup-contact-submit');
+  const statusEl = form.querySelector('#signup-contact-status');
+
+  // Emphasize CTA when user types
+  [emailInput, nameInput, messageInput].forEach(input => {
+    if (!input) return;
+    input.addEventListener('input', () => {
+      if (
+        (emailInput && emailInput.value.trim()) ||
+        (nameInput && nameInput.value.trim()) ||
+        (messageInput && messageInput.value.trim())
+      ) {
+        submitBtn.classList.add('active');
+      } else {
+        submitBtn.classList.remove('active');
+      }
+      if (statusEl) {
+        statusEl.textContent = '';
+        statusEl.classList.remove('success');
+      }
+      emailInput.classList.remove('input-error');
+    });
+  });
+
+  // Simple validation and submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+    if (!emailInput.value.trim() || !/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) {
+      emailInput.classList.add('input-error');
+      if (statusEl) {
+        statusEl.textContent = 'Please enter a valid email.';
+        statusEl.classList.remove('success');
+      }
+      emailInput.focus();
+      valid = false;
+    }
+    if (!valid) return;
+    // Simulate success
+    if (statusEl) {
+      statusEl.textContent = 'Thanks! I’ll respond within 24–48 hours.';
+      statusEl.classList.add('success');
+    }
+    form.reset();
+    submitBtn.classList.remove('active');
+  });
 }
 
 function openModalById(id) {
@@ -231,7 +227,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initProjectDetailModal();
   initExperienceDetailModal();
   initEducationDetailModal();
-  
+
   // Load projects from GitHub
   let projects = [];
   try {
@@ -267,7 +263,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   enableTileAccessibility();
   initModalBackdrop();
   initNavbarScroll();
-  initAboutModalStub();
+  // Expose About modal functions for inline HTML usage
+  window.openAboutModal = openAboutModal;
+  window.closeAboutModal = closeAboutModal;
   if (typeof lucide !== "undefined") {
     lucide.createIcons();
   }

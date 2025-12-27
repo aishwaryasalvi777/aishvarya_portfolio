@@ -706,7 +706,6 @@ body {
     min-height: unset; /* IMPORTANT */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-smoothing: antialiased;
 }
 
 /* Prevent background scroll when project modal is open */
@@ -1139,7 +1138,6 @@ body.project-modal-open {
     line-height: 1;
     color: #000000;
     -webkit-text-stroke: 3px #4a4a4a;
-    text-stroke: 3px #4a4a4a;
     z-index: 2;
     pointer-events: none;
 }
