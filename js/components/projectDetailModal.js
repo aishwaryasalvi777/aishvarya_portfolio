@@ -53,6 +53,11 @@ export function openProjectDetail(project) {
   isProjectModalOpen = true;
   if (typeof lucide !== "undefined") lucide.createIcons();
   projectModal.setAttribute("aria-hidden", "false");
+
+  // Initialize carousel if it exists
+  setTimeout(() => {
+    initProjectCarousel();
+  }, 0);
 }
 
 export function closeProjectDetailModal() {
@@ -67,6 +72,7 @@ function buildProjectDetailHTML(project) {
   const {
     title,
     image,
+    images = [],
     match,
     year,
     category,
@@ -92,11 +98,31 @@ function buildProjectDetailHTML(project) {
 
   const tagsHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join("");
   const pointsHTML = points.map(p => `<li>${p}</li>`).join("");
+  const repoUrl = (links && links[0] && links[0].url) ? links[0].url.toLowerCase() : '';
+  const fallbackImage = (title || '').toLowerCase().includes('metabolomics') ||
+    repoUrl.includes('end-to-end-metabolomics-biomarker-modeling-pipeline')
+    ? 'assets/images/meta1.png'
+    : 'assets/images/portfolio.png';
+
+  // Build image carousel if multiple images exist
+  const hasMultipleImages = images && images.length > 1;
+  const heroContent = hasMultipleImages
+    ? `<div class="project-modal-carousel">
+         <div class="carousel-container">
+           ${images.map((img, idx) => `<img src="${img}" alt="${title} - Image ${idx + 1}" class="carousel-image ${idx === 0 ? 'active' : ''}" data-index="${idx}" />`).join('')}
+         </div>
+         <div class="carousel-controls">
+           <button class="carousel-prev" data-action="prev">❮</button>
+           <div class="carousel-dots">${images.map((_, idx) => `<span class="dot ${idx === 0 ? 'active' : ''}" data-index="${idx}"></span>`).join('')}</div>
+           <button class="carousel-next" data-action="next">❯</button>
+         </div>
+       </div>`
+    : `<img src="${image || fallbackImage}" alt="${title}" />`;
 
   const header = `
     <div class="project-modal-header">
       <div class="project-modal-hero">
-        <img src="${image || "assets/images/portfolio.png"}" alt="${title}" />
+        ${heroContent}
         <div class="project-modal-hero-overlay"></div>
       </div>
       <div class="project-modal-intro">
@@ -117,4 +143,56 @@ function buildProjectDetailHTML(project) {
   `;
 
   return { header, content };
+}
+
+/**
+ * Initialize carousel functionality for projects with multiple images
+ */
+function initProjectCarousel() {
+  const carousel = projectModalHeader?.querySelector('.project-modal-carousel');
+  if (!carousel) return;
+
+  const container = carousel.querySelector('.carousel-container');
+  const images = carousel.querySelectorAll('.carousel-image');
+  const dots = carousel.querySelectorAll('.carousel-dots .dot');
+  const prevBtn = carousel.querySelector('.carousel-prev');
+  const nextBtn = carousel.querySelector('.carousel-next');
+  
+  if (!container || images.length === 0) return;
+
+  let currentIndex = 0;
+
+  function updateCarousel(newIndex) {
+    currentIndex = (newIndex + images.length) % images.length;
+    
+    images.forEach((img, idx) => {
+      img.classList.toggle('active', idx === currentIndex);
+    });
+    
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    updateCarousel(currentIndex - 1);
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    updateCarousel(currentIndex + 1);
+  });
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      updateCarousel(idx);
+    });
+  });
+
+  // Keyboard navigation
+  const handleKeyboard = (e) => {
+    if (!isProjectModalOpen) return;
+    if (e.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
+    if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
+  };
+  document.addEventListener('keydown', handleKeyboard);
 }

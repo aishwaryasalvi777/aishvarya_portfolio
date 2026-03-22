@@ -24,9 +24,22 @@ export function renderProjectsRow(projectsData) {
 }
 
 function renderProjectTile(project) {
-  // Handle empty images - show a placeholder or gradient
-    const imageContent = project.image 
-        ? `<img src="${project.image}" class="tile-image" alt="${project.title} preview" onclick="openProjectDetailById(${project.id});" />`
+    const repoUrl = (project.links && project.links[0] && project.links[0].url)
+        ? project.links[0].url.toLowerCase()
+        : '';
+    const title = (project.title || '').toLowerCase();
+    const fallbackImage = title.includes('metabolomics') ||
+        repoUrl.includes('end-to-end-metabolomics-biomarker-modeling-pipeline') ||
+        (title.includes('neural') && title.includes('network')) ||
+        repoUrl.includes('neural-networks-ml') ||
+        repoUrl.includes('neural_networks_ml')
+        ? (title.includes('neural') && title.includes('network') ? 'assets/images/ml.png' : 'assets/images/meta1.png')
+        : '';
+    const tileImage = project.image || fallbackImage;
+
+    // Handle empty images - show a placeholder or gradient
+        const imageContent = tileImage
+                ? `<img src="${tileImage}" class="tile-image" alt="${project.title} preview" onclick="openProjectDetailById(${project.id});" />`
         : `<div class="tile-image tile-image-placeholder" onclick="openProjectDetailById(${project.id});">
                  <i data-lucide="github" class="w-16 h-16 text-gray-400"></i>
              </div>`;

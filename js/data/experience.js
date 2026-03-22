@@ -61,7 +61,7 @@ export const experienceData = [
     match: "Classic",
     preview: "95% validation coverage. 97% build success rate.",
     gradient: "",
-    image: "assets/images/image- software.jpg",
+    image: "assets/images/image-software.jpg",
     tags: ["SQL", "Analytics", "Agile"],
     points: [
       "Developed SQL-based validation scripts and analytics reports to ensure data integrity across software releases, increasing coverage from 60% to 95% and reducing escaped defects by 40%.",

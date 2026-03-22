@@ -232,9 +232,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   let projects = [];
   try {
     projects = await loadProjectsFromGitHub();
+    // Force cover image for the metabolomics repo by GitHub slug.
+    projects = projects.map((p) => {
+      const repoUrl = (p.links && p.links[0] && p.links[0].url) ? p.links[0].url.toLowerCase() : "";
+      const title = (p.title || '').toLowerCase();
+      const isMetabolomicsRepo =
+        repoUrl.includes('end-to-end-metabolomics-biomarker-modeling-pipeline') ||
+        (title.includes('end to end') && title.includes('metabolomics')) ||
+        title.includes('biomarker modeling pipeline');
+      const isNeuralNetworksRepo =
+        repoUrl.includes('neural-networks-ml') ||
+        repoUrl.includes('neural_networks_ml') ||
+        (title.includes('neural') && title.includes('network'));
+
+      if (isMetabolomicsRepo) {
+        return { ...p, image: 'assets/images/meta1.png' };
+      }
+      if (isNeuralNetworksRepo) {
+        return { ...p, image: 'assets/images/ml.png' };
+      }
+      return p;
+    });
     if (projects.length === 0) {
       console.warn('No GitHub repos found, using fallback');
       projects = projectsData;
+    } else {
+      // Merge static fallback projects with GitHub projects
+      // Filter out any GitHub projects with IDs that already exist in projectsData to avoid duplication
+      const githubIds = new Set(projects.map(p => p.id));
+      const staticProjects = projectsData.filter(p => !githubIds.has(p.id));
+      // Append static projects to the end
+      projects = [...projects, ...staticProjects];
     }
   } catch (err) {
     console.error("Failed to load GitHub projects, using fallback", err);

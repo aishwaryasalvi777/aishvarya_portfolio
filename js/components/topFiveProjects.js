@@ -36,8 +36,21 @@ export function renderTopFiveProjectsRow(projectsData) {
 }
 
 function renderTopCard(project, index) {
-  const imageContent = project.image
-    ? `<img src="${project.image}" class="w-full h-96 object-cover" alt="${project.title} preview" onclick="openModal('project', ${project.id});" />`
+  const repoUrl = (project.links && project.links[0] && project.links[0].url)
+    ? project.links[0].url.toLowerCase()
+    : '';
+  const title = (project.title || '').toLowerCase();
+  const fallbackImage = title.includes('metabolomics') ||
+    repoUrl.includes('end-to-end-metabolomics-biomarker-modeling-pipeline') ||
+    (title.includes('neural') && title.includes('network')) ||
+    repoUrl.includes('neural-networks-ml') ||
+    repoUrl.includes('neural_networks_ml')
+    ? ((title.includes('neural') && title.includes('network')) ? 'assets/images/ml.png' : 'assets/images/meta1.png')
+    : '';
+  const tileImage = project.image || fallbackImage;
+
+  const imageContent = tileImage
+    ? `<img src="${tileImage}" class="w-full h-96 object-cover" alt="${project.title} preview" onclick="openModal('project', ${project.id});" />`
     : `<div class="w-full h-96 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" onclick="openModal('project', ${project.id});">
          <i data-lucide="github" class="w-16 h-16 text-gray-600"></i>
        </div>`;

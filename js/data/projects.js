@@ -120,6 +120,25 @@ function transformRepo(repo, index) {
   ) {
     projectImage = 'assets/images/foodborne_illness.png';
   } else if (
+    // Exact End-to-End Metabolomics Biomarker Modeling Pipeline repo cover image
+    nameLower === 'end-to-end-metabolomics-biomarker-modeling-pipeline' ||
+    nameLower === 'end_to_end_metabolomics_biomarker_modeling_pipeline'
+  ) {
+    projectImage = 'assets/images/meta1.png';
+  } else if (
+    // Broader metabolomics fallback
+    nameLower.includes('metabolomics') ||
+    (nameLower.includes('biomarker') && nameLower.includes('model'))
+  ) {
+    projectImage = 'assets/images/meta1.png';
+  } else if (
+    // Neural Networks ML repo detection
+    nameLower === 'neural-networks-ml' ||
+    nameLower === 'neural_networks_ml' ||
+    (nameLower.includes('neural') && nameLower.includes('network'))
+  ) {
+    projectImage = 'assets/images/ml.png';
+  } else if (
     // Machine Learning repo detection
     nameLower === 'machine_learning' ||
     nameLower === 'machine-learning' ||
@@ -153,7 +172,12 @@ export async function loadProjectsFromGitHub() {
   return repos
     .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
     .slice(0, 20)
-    .map(transformRepo);
+    .map((repo, index) => {
+      const transformed = transformRepo(repo, index);
+      // Assign higher IDs to GitHub projects to avoid conflicts with static fallback projects
+      transformed.id = 1000 + index; // GitHub projects get IDs 1000+
+      return transformed;
+    });
 }
 
 // Static fallback projects (kept for reference)
@@ -225,6 +249,24 @@ export const projectsData = [
     points: ["Automated demand forecasting", "Scalable ML workflow", "Production-ready pipeline"],
     links: [
       { label: "View Code", url: "https://github.com/aishwaryasalvi777/demand-forecast-pipelin" },
+      { label: "Full Report", url: "#" }
+    ]
+  },
+  {
+    id: 5,
+    title: "End to End Metabolomics Biomarker Modeling Pipeline",
+    desc: "Developed a comprehensive metabolomics analysis pipeline for biomarker discovery and modeling with advanced data visualization and statistical analysis.",
+    match: "93% Match",
+    year: "2024",
+    category: "Machine Learning",
+    preview: "Metabolomics analysis with biomarker modeling.",
+    gradient: "",
+    image: "assets/images/meta1.png",
+    images: ["assets/images/meta1.png", "assets/images/meta2.png", "assets/images/meta3.png"],
+    tags: ["Python", "Metabolomics", "Biomarker"],
+    points: ["End-to-end metabolomics pipeline", "Biomarker discovery and modeling", "Statistical analysis and visualization"],
+    links: [
+      { label: "View Code", url: "https://github.com/aishwaryasalvi777/End_to_End_Metabolomics_Biomarker_Modeling_Pipeline" },
       { label: "Full Report", url: "#" }
     ]
   }
