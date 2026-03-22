@@ -210,5 +210,22 @@ export const projectsData = [
       { label: "View Code", url: "https://github.com/aishwaryasalvi777/ML_Heart_Attack_Prediction" },
       { label: "Full Report", url: "#" }
     ]
+  },
+  {
+    id: 4,
+    title: "Demand Forecast Pipeline",
+    desc: "Built an automated, scalable ML workflow supporting accurate demand forecasting.",
+    match: "94% Match",
+    year: "2024",
+    category: "Data Engineering",
+    preview: "Time series forecasting pipeline. Automated scalability.",
+    gradient: "",
+    image: "assets/images/df1.png",
+    tags: ["Python", "Time Series", "ML Pipeline"],
+    points: ["Automated demand forecasting", "Scalable ML workflow", "Production-ready pipeline"],
+    links: [
+      { label: "View Code", url: "https://github.com/aishwaryasalvi777/demand-forecast-pipelin" },
+      { label: "Full Report", url: "#" }
+    ]
   }
 ];
