@@ -105,6 +105,11 @@ function transformRepo(repo, index) {
   ) {
     projectImage = 'assets/images/fleet1.png';
   } else if (
+    // Demand Forecast Pipeline detection
+    nameLower.includes('demand') && nameLower.includes('forecast')
+  ) {
+    projectImage = 'assets/images/df1.png';
+  } else if (
     // Short-term temperature forecasting (ARIMA/LSTM) detection
     nameLower.includes('temperature') && nameLower.includes('forecast') && (nameLower.includes('arima') || nameLower.includes('lstm'))
   ) {
